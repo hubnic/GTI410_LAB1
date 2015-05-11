@@ -8,6 +8,7 @@ package view;
 
 import java.awt.image.BufferedImage;
 
+import controller.ConversionCMYK;
 import model.ObserverIF;
 import model.Pixel;
 
@@ -37,18 +38,21 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 		
 		
 		/*ICI ON APPELLE LES METHODE DE CONVERSION POUR C M Y K */
-		this.red = result.getPixel().getRed();
-		this.green = result.getPixel().getGreen();
-		this.blue = result.getPixel().getBlue();
+		this.c = ConversionCMYK.getC(result.getPixel());
+		this.m = ConversionCMYK.getM(result.getPixel());
+		this.y = ConversionCMYK.getY(result.getPixel());
+		this.k = ConversionCMYK.getK(result.getPixel());
 		this.result = result;
 		result.addObserver(this);
 		
-		redImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
-		greenImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
-		blueImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
-		computeRedImage(red, green, blue);
-		computeGreenImage(red, green, blue);
-		computeBlueImage(red, green, blue); 	
+		cImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
+		mImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
+		yImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
+		kImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
+		computeCImage(c, m, y, k);
+		computeMImage(c, m, y, k);
+		computeYImage(c, m, y, k); 
+		computeKImage(c, m, y, k);
 	}
 	
 	
@@ -56,32 +60,45 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 	 * @see View.SliderObserver#update(double)
 	 */
 	public void update(ColorSlider s, int v) {
-		boolean updateRed = false;
-		boolean updateGreen = false;
-		boolean updateBlue = false;
-		if (s == redCS && v != red) {
-			red = v;
-			updateGreen = true;
-			updateBlue = true;
+		boolean updateC = false;
+		boolean updateM = false;
+		boolean updateY = false;
+		boolean updateK = false;
+		if (s == cCS && v != c) {
+			c = v;
+			updateM = true;
+			updateY = true;
+			updateK = true;
 		}
-		if (s == greenCS && v != green) {
-			green = v;
-			updateRed = true;
-			updateBlue = true;
+		if (s == mCS && v != m) {
+			m = v;
+			updateC = true;
+			updateY = true;
+			updateK = true;
 		}
-		if (s == blueCS && v != blue) {
-			blue = v;
-			updateRed = true;
-			updateGreen = true;
+		if (s == yCS && v != y) {
+			y = v;
+			updateM = true;
+			updateC = true;
+			updateK = true;
 		}
-		if (updateRed) {
-			computeRedImage(red, green, blue);
+		if (s == yCS && v != k) {
+			k = v;
+			updateM = true;
+			updateY = true;
+			updateC = true;
 		}
-		if (updateGreen) {
-			computeGreenImage(red, green, blue);
+		if (updateC) {
+			computeCImage(c, m, y, k);
 		}
-		if (updateBlue) {
-			computeBlueImage(red, green, blue);
+		if (updateM) {
+			computeMImage(c, m, y, k);
+		}
+		if (updateY) {
+			computeYImage(c, m, y, k);
+		}
+		if (updateK) {
+			computeKImage(c, m, y, k);
 		}
 		
 		Pixel pixel = new Pixel(red, green, blue, 255);
