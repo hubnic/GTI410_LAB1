@@ -12,6 +12,7 @@ public class ConversionHSV {
 	int b;
 	int MAX;
 	int MIN;
+	
 	public ConversionHSV(Pixel result){
 		pixelRecu =  result;
 		
@@ -23,7 +24,30 @@ public class ConversionHSV {
 		V = this.max(r, g, b);
 		S = (V-min(r,g,b))/V;
 				
-		if ()
+		if (r == MAX & g==MIN) {
+			H = 5+ ((r-b)/(r-g));
+		}
+		else if (r == MAX & b== MIN){
+			H=1-((r-g)/(r-b));
+		}
+		else if (g == MAX & b== MIN){
+			H=1+((g-r)/(g-b));
+		}
+		else if (g == MAX & r== MIN){
+			H=3-((g-b)/(g-r));
+		}
+		else if (b == MAX & r== MIN){
+			H=3+((b-g)/(b-r));
+		}
+		else if (b == MAX & g== MIN){
+			H=5-((b-r)/(b-g));
+		}
+		H= H * 60;
+		
+		if(H<0){
+			H += 360; 
+		}
+		
 	}
 	
 	public int getH(){
@@ -37,28 +61,28 @@ public class ConversionHSV {
 	}
 	
 	public int max(int r,int g,int b){
-		int max = r;
+		int MAX = r;
 		
-		if (g >max){
-			max=g;
+		if (g > MAX){
+			MAX=g;
 		}
-		if (b >max){
-			max=b;
+		if (b > MAX){
+			MAX=b;
 		}
 		
-		return max;
+		return MAX;
 	}
 	
 	public int min(int r,int g,int b){
-		int min = r;
+		int MIN = r;
 		
-		if (g < min){
-			min=g;
+		if (g < MIN){
+			MIN=g;
 		}
-		if (b < min){
-			min=b;
+		if (b < MIN){
+			MIN=b;
 		}
-		return min;
+		return MIN;
 	}
 	
 	
