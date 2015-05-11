@@ -122,8 +122,20 @@ public class ColorDialog extends JDialog {
 		return panel;
 	}
 	
+	
 	private JPanel createHSVPanel(ColorDialogResult result, int imageWidths) {	
+		
+		//Teinte saturation valeur TSV = HSV
 		JPanel panel = new JPanel();
+		
+		ColorSlider csH = new ColorSlider("H:", result.getPixel().getRed(), rgbMediator.getRedImage());
+		ColorSlider csS = new ColorSlider("S:", result.getPixel().getGreen(), rgbMediator.getGreenImage());
+		ColorSlider csV = new ColorSlider("V:", result.getPixel().getBlue(), rgbMediator.getBlueImage());
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(csH);
+		panel.add(csS);
+		panel.add(csV);
 		
 		return panel;
 	}
