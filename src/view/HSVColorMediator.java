@@ -3,7 +3,10 @@ package view;
 import model.ObserverIF;
 
 class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
-
+	ColorSlider hCS;
+	ColorSlider sCS;
+	ColorSlider vCS;
+		
 	
 	
 	@Override
