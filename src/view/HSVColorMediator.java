@@ -78,29 +78,32 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 		
 	}
 	
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		boolean updateHue = false;
-		boolean updateSaturation = false;
-		boolean updateValue = false;
-		
-		
-		
-	}
+	
 
 	public void computeHueImage(int hRecu,int sRecu,int vRecu) {
 		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < imagesWidth; ++i) {
+					
+			for (int j = 0; j < imagesHeight; ++j) {
+			}
+		}
 	}
 	
 	public void computeSaturationImage(int hRecu,int sRecu,int vRecu) {
 		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < imagesWidth; ++i) {
+			
+			for (int j = 0; j < imagesHeight; ++j) {
+			}
+		}
 	}
 	public void computeValueImage(int hRecu,int sRecu,int vRecu) {
 		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < imagesWidth; ++i) {
+			
+			for (int j = 0; j < imagesHeight; ++j) {
+			}
+		}
 	}
 	
 	
@@ -144,6 +147,17 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 		slider.addObserver(this);
 	}
 	
+	
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		boolean updateHue = false;
+		boolean updateSaturation = false;
+		boolean updateValue = false;
+		
+		
+		
+	}
 
 	
 }
