@@ -4,85 +4,70 @@ import model.Pixel;
 
 public class ConversionHSV {
 	Pixel pixelRecu;
-	int H;
-	int S;
-	int V;
-	int r;
-	int g;
-	int b;
-	int MAX;
-	int MIN;
+	float H;
+	float S;
+	float V;
+	float rouge;
+	float vert;
+	float bleu;
+	float MAX;
+	float MIN;
 	
 	public ConversionHSV(Pixel result){
 		pixelRecu =  result;
 		
-		r=pixelRecu.getRed();
-		g=pixelRecu.getGreen();
-		b=pixelRecu.getRed();
+		rouge=(pixelRecu.getRed());
+		vert= (pixelRecu.getGreen());
+		bleu=(pixelRecu.getBlue());
+		
+		MAX = Math.max(rouge, Math.max(vert,bleu));
+		MIN = Math.min(rouge, Math.min(vert, bleu));
 		
 		
-		V = this.max(r, g, b);
-		S = (V-min(r,g,b))/V;
-				
-		if (r == MAX & g==MIN) {
-			H = 5+ ((r-b)/(r-g));
+		//HUE CALCUL (TEINTE)
+		if(rouge == MAX){
+			System.out.println("Je suis dans la cas ou Rouge = MAX");
+			H= (60 * ((vert-bleu)/(MAX-MIN)+360))%360;
 		}
-		else if (r == MAX & b== MIN){
-			H=1-((r-g)/(r-b));
-		}
-		else if (g == MAX & b== MIN){
-			H=1+((g-r)/(g-b));
-		}
-		else if (g == MAX & r== MIN){
-			H=3-((g-b)/(g-r));
-		}
-		else if (b == MAX & r== MIN){
-			H=3+((b-g)/(b-r));
-		}
-		else if (b == MAX & g== MIN){
-			H=5-((b-r)/(b-g));
-		}
-		H= H * 60;
 		
-		if(H<0){
-			H += 360; 
+		if(vert == MAX){
+			System.out.println("Je suis dans la cas ou Vert = MAX");
+			H= 60 * ((bleu-rouge)/(MAX-MIN)) + 120;
 		}
+		if(bleu == MAX){
+			System.out.println("Je suis dans la cas ou Bleu = MAX");
+			H= 60 * ((rouge-vert)/(MAX-MIN)) + 240;
+		}
+		if( H < 0 ){
+			  H += 360;
+		}
+	      
+		if(MAX == MIN){
+			H= 0;
+		}
+		
+		//SATURATION
+		if(MAX==0){
+			S=0;
+		}else if(MAX!=0){
+			S=1-(MIN/MAX);
+		}
+		
+		//VALEUR
+		V=Math.max(rouge/255, Math.max(vert/255,bleu/255));
 		
 	}
 	
-	public int getH(){
+	
+	
+	public float getH(){
 		return this.H;
 	}
-	public int getS(){
+	public float getS(){
 		return this.S;
 	}
-	public int getV(){
+	public float getV(){
 		return this.V;
-	}
-	
-	public int max(int r,int g,int b){
-		int MAX = r;
-		
-		if (g > MAX){
-			MAX=g;
-		}
-		if (b > MAX){
-			MAX=b;
-		}
-		
-		return MAX;
-	}
-	
-	public int min(int r,int g,int b){
-		int MIN = r;
-		
-		if (g < MIN){
-			MIN=g;
-		}
-		if (b < MIN){
-			MIN=b;
-		}
-		return MIN;
 	}
 	
 	
