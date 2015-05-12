@@ -125,7 +125,7 @@ public class ColorDialog extends JDialog {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		ColorSlider csC = new ColorSlider("C:", result.getPixel().getC(), cmykMediator.getCImage());
+		/**ColorSlider csC = new ColorSlider("C:", result.getPixel().getC(), cmykMediator.getCImage());
 		ColorSlider csM = new ColorSlider("M:", result.getPixel().getM(), cmykMediator.getMImage());
 		ColorSlider csY = new ColorSlider("Y:", result.getPixel().getY(), cmykMediator.getYImage());
 		ColorSlider csK = new ColorSlider("K:", result.getPixel().getK(), cmykMediator.getKImage());
@@ -139,7 +139,7 @@ public class ColorDialog extends JDialog {
 		panel.add(csC);
 		panel.add(csM);
 		panel.add(csY);
-		panel.add(csK);
+		panel.add(csK);**/
 		return panel;
 	}
 	
@@ -150,20 +150,17 @@ public class ColorDialog extends JDialog {
 		JPanel panel = new JPanel();
 		
 		conversionHSV = new ConversionHSV(result.getPixel());
-				
-		//System.out.println(conversionHSV.getH());
-		//System.out.println(conversionHSV.getS());
-		//System.out.println(conversionHSV.getV());
+		hsvMediator = new HSVColorMediator(result, imageWidths, 30);		
 		
-		ColorSlider csH = new ColorSlider("H:", result.getPixel().getRed(), rgbMediator.getRedImage());
-		ColorSlider csS = new ColorSlider("S:", result.getPixel().getGreen(), rgbMediator.getGreenImage());
-		ColorSlider csV = new ColorSlider("V:", result.getPixel().getBlue(), rgbMediator.getBlueImage());
+		ColorSlider csH = new ColorSlider("H:", conversionHSV.getH(), hsvMediator.getHueImage());
+		ColorSlider csS = new ColorSlider("S:", conversionHSV.getS(), hsvMediator.getSaturationImage());
+		ColorSlider csV = new ColorSlider("V:", conversionHSV.getV(), hsvMediator.getValueImage());
 		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		//hsvMediator.setRedCS(csH);
-		//hsvMediator.setGreenCS(csS);
-		//hsvMediator.setBlueCS(csV);
+		hsvMediator.setHueCS(csH);
+		hsvMediator.setSaturationCS(csS);
+		hsvMediator.setValueCS(csV);
 		
 		panel.add(csH);
 		panel.add(csS);

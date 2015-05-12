@@ -17,6 +17,7 @@ package view;
 
 import java.awt.image.BufferedImage;
 
+import controller.ConversionHSV;
 import model.ObserverIF;
 import model.Pixel;
 
@@ -35,6 +36,7 @@ class RGBColorMediator extends Object implements SliderObserver, ObserverIF {
 	ColorDialogResult result;
 	
 	RGBColorMediator(ColorDialogResult result, int imagesWidth, int imagesHeight) {
+		
 		this.imagesWidth = imagesWidth;
 		this.imagesHeight = imagesHeight;
 		this.red = result.getPixel().getRed();

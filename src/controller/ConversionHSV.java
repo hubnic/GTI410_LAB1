@@ -60,14 +60,14 @@ public class ConversionHSV {
 	
 	
 	
-	public float getH(){
-		return this.H;
+	public int getH(){
+		return (int)this.H;
 	}
-	public float getS(){
-		return this.S;
+	public int getS(){
+		return (int)this.S;
 	}
-	public float getV(){
-		return this.V;
+	public int getV(){
+		return (int)this.V;
 	}
 	
 	
