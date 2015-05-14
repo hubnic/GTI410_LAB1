@@ -2,7 +2,7 @@ package controller;
 
 import model.Pixel;
 
-public class ConversionHSV {
+public class ConversionRGBversHSV {
 	Pixel pixelRecu;
 	float H;
 	float S;
@@ -13,7 +13,7 @@ public class ConversionHSV {
 	float MAX;
 	float MIN;
 	
-	public ConversionHSV(Pixel result){
+	public ConversionRGBversHSV(Pixel result){
 		pixelRecu =  result;
 		
 		rouge=(pixelRecu.getRed());

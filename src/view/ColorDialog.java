@@ -27,7 +27,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import controller.ConversionHSV;
+import controller.ConversionRGBversHSV;
 import model.Pixel;
 
 /**
@@ -44,7 +44,7 @@ public class ColorDialog extends JDialog {
 	private HSVColorMediator hsvMediator;
 	private ActionListener okActionListener;
 	private ColorDialogResult result;
-	private ConversionHSV conversionHSV;
+	private ConversionRGBversHSV conversionHSV;
 	static public Pixel getColor(Frame owner, Pixel color, int imageWidths) {
 		ColorDialogResult result = new ColorDialogResult(color);
 		ColorDialog colorDialog = new ColorDialog(owner, result, imageWidths);
@@ -102,6 +102,7 @@ public class ColorDialog extends JDialog {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		result.getPixel().toString();
 		ColorSlider csRed = new ColorSlider("R:", result.getPixel().getRed(), rgbMediator.getRedImage());
 		ColorSlider csGreen = new ColorSlider("G:", result.getPixel().getGreen(), rgbMediator.getGreenImage());
 		ColorSlider csBlue = new ColorSlider("B:", result.getPixel().getBlue(), rgbMediator.getBlueImage());
@@ -149,7 +150,7 @@ public class ColorDialog extends JDialog {
 		//Teinte saturation valeur TSV = HSV
 		JPanel panel = new JPanel();
 		
-		conversionHSV = new ConversionHSV(result.getPixel());
+		conversionHSV = new ConversionRGBversHSV(result.getPixel());
 		hsvMediator = new HSVColorMediator(result, imageWidths, 30);		
 		
 		ColorSlider csH = new ColorSlider("H:", conversionHSV.getH(), hsvMediator.getHueImage());

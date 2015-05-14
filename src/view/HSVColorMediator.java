@@ -2,8 +2,9 @@ package view;
 
 import java.awt.image.BufferedImage;
 
-import controller.ConversionHSV;
+import controller.ConversionRGBversHSV;
 import model.ObserverIF;
+import model.Pixel;
 
 class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 	ColorSlider hCS;
@@ -17,12 +18,12 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 	BufferedImage vImage;
 	int imagesWidth;
 	int imagesHeight;
-	ConversionHSV conversionHSV;
+	ConversionRGBversHSV conversionHSV;
 	ColorDialogResult result;
 	HSVColorMediator(ColorDialogResult result, int imagesWidth, int imagesHeight) {
 		this.imagesWidth = imagesWidth;
 		this.imagesHeight = imagesHeight;
-		conversionHSV = new ConversionHSV(result.getPixel());
+		conversionHSV = new ConversionRGBversHSV(result.getPixel());
 		
 		this.h = conversionHSV.getH();
 		this.s = conversionHSV.getS();
@@ -82,10 +83,14 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 
 	public void computeHueImage(int hRecu,int sRecu,int vRecu) {
 		// TODO Auto-generated method stub
+		Pixel p = new Pixel (result.getPixel().getRed(),result.getPixel().getGreen(),result.getPixel().getBlue());
 		for (int i = 0; i < imagesWidth; ++i) {
 					
 			for (int j = 0; j < imagesHeight; ++j) {
 			}
+		}
+		if (hCS != null) {
+			hCS.update(hImage);
 		}
 	}
 	
@@ -96,6 +101,9 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 			for (int j = 0; j < imagesHeight; ++j) {
 			}
 		}
+		if (sCS != null) {
+			sCS.update(sImage);
+		}
 	}
 	public void computeValueImage(int hRecu,int sRecu,int vRecu) {
 		// TODO Auto-generated method stub
@@ -103,6 +111,9 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 			
 			for (int j = 0; j < imagesHeight; ++j) {
 			}
+		}
+		if (vCS != null) {
+			vCS.update(vImage);
 		}
 	}
 	
