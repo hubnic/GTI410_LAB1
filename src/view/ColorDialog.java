@@ -27,6 +27,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import controller.ConversionCMYK;
 import controller.ConversionRGBversHSV;
 import model.Pixel;
 
@@ -42,6 +43,7 @@ public class ColorDialog extends JDialog {
 	private JButton okButton;
 	private RGBColorMediator rgbMediator;
 	private HSVColorMediator hsvMediator;
+	private CMYKColorMediator cmykMediator;
 	private ActionListener okActionListener;
 	private ColorDialogResult result;
 	private ConversionRGBversHSV conversionHSV;
@@ -122,25 +124,25 @@ public class ColorDialog extends JDialog {
 	//code tire de la methode "createRGBPanel" et adapte a lesapce de couleur CMYK
 	private JPanel createCMYKPanel(ColorDialogResult result, int imageWidths) {	
 		
-		//cmykMediator = new CMYKColorMediator(result, imageWidths, 30);
+		cmykMediator = new CMYKColorMediator(result, imageWidths, 30);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		/**ColorSlider csC = new ColorSlider("C:", result.getPixel().getC(), cmykMediator.getCImage());
-		ColorSlider csM = new ColorSlider("M:", result.getPixel().getM(), cmykMediator.getMImage());
-		ColorSlider csY = new ColorSlider("Y:", result.getPixel().getY(), cmykMediator.getYImage());
-		ColorSlider csK = new ColorSlider("K:", result.getPixel().getK(), cmykMediator.getKImage());
+		ColorSlider csC = new ColorSlider("C:", ConversionCMYK.getC(result.getPixel()), cmykMediator.getCImage());
+		ColorSlider csM = new ColorSlider("M:", ConversionCMYK.getM(result.getPixel()), cmykMediator.getMImage());
+		ColorSlider csY = new ColorSlider("Y:", ConversionCMYK.getY(result.getPixel()), cmykMediator.getYImage());
+		//ColorSlider csK = new ColorSlider("K:", result.getPixel().getK(), cmykMediator.getKImage());
 		
 		cmykMediator.setCCS(csC);
 		cmykMediator.setMCS(csM);
 		cmykMediator.setYCS(csY);
-		cmykMediator.setKCS(csK);
+		//cmykMediator.setKCS(csK);
 		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(csC);
 		panel.add(csM);
 		panel.add(csY);
-		panel.add(csK);**/
+		//panel.add(csK);
 		return panel;
 	}
 	
