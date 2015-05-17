@@ -3,44 +3,19 @@ package controller;
 import model.Pixel;
 
 public class ConversionRGBversCMYK {
-	Pixel pixelRecu;
-	float C;
-	float M;
-	float Y;
-	float K;
-	float rouge;
-	float vert;
-	float bleu;
-	float MAX;
-	float MIN;
 	
-	public ConversionRGBversCMYK(Pixel result){
-		pixelRecu =  result;
-		
-		rouge=(pixelRecu.getRed());
-		vert= (pixelRecu.getGreen());
-		bleu=(pixelRecu.getBlue());
-		
-		MAX = Math.max(rouge, Math.max(vert,bleu));
-		MIN = Math.min(rouge, Math.min(vert, bleu));
-		
-		
-		k
-		
+	public static int getC(Pixel pixel){
+		return (1-pixel.getRed()-getK(pixel))/1-getK(pixel);
 	}
-	
-	
-	
-	public int getH(){
-		return (int)this.H;
+	public static int getM(Pixel pixel){
+		return (1-pixel.getGreen()-getK(pixel))/1-getK(pixel);
 	}
-	public int getS(){
-		return (int)this.S;
+	public static int getY(Pixel pixel){
+		return (1-pixel.getBlue()-getK(pixel))/1-getK(pixel);
 	}
-	public int getV(){
-		return (int)this.V;
+	public static int getK(Pixel pixel){
+		return 1-Math.max(pixel.getRed(), Math.max(pixel.getBlue(), pixel.getGreen()));
 	}
-	
 	
 }
 

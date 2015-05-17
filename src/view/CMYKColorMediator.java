@@ -40,11 +40,10 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 		
 		
 		/*ICI ON APPELLE LES METHODE DE CONVERSION POUR C M Y K */
-		conversionCMYK = new ConversionRGBversCMYK(this.result.get);
-		this.c = conversionCMYK.getC();
-		this.m = conversionCMYK.getM();
-		this.y = conversionCMYK.getY();
-		this.k = conversionCMYK.getK();
+		this.c = ConversionRGBversCMYK.getC(result.getPixel());
+		this.m = ConversionRGBversCMYK.getM(result.getPixel());
+		this.y = ConversionRGBversCMYK.getY(result.getPixel());
+		this.k = ConversionRGBversCMYK.getK(result.getPixel());
 		this.result = result;
 		result.addObserver(this);
 		
@@ -226,9 +225,9 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 		Pixel currentColor = new Pixel(c, m, y, 255);
 		if(currentColor.getARGB() == result.getPixel().getARGB()) return;
 		
-		c = conversionCMYK.getC();
-		m = conversionCMYK.getM();
-		y = conversionCMYK.getY();
+		c = ConversionRGBversCMYK.getC(result.getPixel());
+		m = ConversionRGBversCMYK.getM(result.getPixel());
+		y = ConversionRGBversCMYK.getY(result.getPixel());
 		
 		cCS.setValue(c);
 		mCS.setValue(m);
