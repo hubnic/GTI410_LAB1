@@ -153,12 +153,11 @@ public class ColorDialog extends JDialog {
 		//Teinte saturation valeur TSV = HSV
 		JPanel panel = new JPanel();
 		
-		conversionHSV = new ConversionRGBversHSV(result.getPixel());
 		hsvMediator = new HSVColorMediator(result, imageWidths, 30);		
-		
-		ColorSlider csH = new ColorSlider("H:", conversionHSV.getH(), hsvMediator.getHueImage());
-		ColorSlider csS = new ColorSlider("S:", conversionHSV.getS(), hsvMediator.getSaturationImage());
-		ColorSlider csV = new ColorSlider("V:", conversionHSV.getV(), hsvMediator.getValueImage());
+	
+		ColorSlider csH = new ColorSlider("H:", hsvMediator.getHueColor(), hsvMediator.getHueImage());
+		ColorSlider csS = new ColorSlider("S:", hsvMediator.getSaturationColor(), hsvMediator.getSaturationImage());
+		ColorSlider csV = new ColorSlider("V:", hsvMediator.getValueColor(), hsvMediator.getValueImage());
 		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
