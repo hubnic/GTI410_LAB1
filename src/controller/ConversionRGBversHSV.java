@@ -29,6 +29,8 @@ public class ConversionRGBversHSV {
 	
 	/**
 	 * Methode permettant de convertir le RGB vers HSV
+	 * Source de la méthode de calcul
+	 * http://www.rapidtables.com/convert/color/rgb-to-hsv.htm
 	 * @param rougeR (Rouge)
 	 * @param vertR	 (Vert)
 	 * @param bleuR	 (Bleu)

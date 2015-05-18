@@ -21,6 +21,8 @@ public class ConversionHSVversRGB {
 	
 	/**
 	 * Methode permettant de convertir le hsv eb rgb
+	 * Source de la methode de calcul :
+	 * http://www.rapidtables.com/convert/color/hsv-to-rgb.htm
 	 * @param hRecu (teinte)
 	 * @param sRecu (saturation)
 	 * @param vRecu (valeur)

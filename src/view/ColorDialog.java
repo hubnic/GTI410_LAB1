@@ -46,7 +46,6 @@ public class ColorDialog extends JDialog {
 	private CMYKColorMediator cmykMediator;
 	private ActionListener okActionListener;
 	private ColorDialogResult result;
-	private ConversionRGBversHSV conversionHSV;
 	private ConversionRGBversCMYK conversionCMYK;
 	static public Pixel getColor(Frame owner, Pixel color, int imageWidths) {
 		ColorDialogResult result = new ColorDialogResult(color);
@@ -122,7 +121,7 @@ public class ColorDialog extends JDialog {
 		return panel;
 	}
 	
-	//code tire de la methode "createRGBPanel" et adapte a lesapce de couleur CMYK
+	//code tire de la methode "createRGBPanel" et adapte a lespace de couleur CMYK
 	private JPanel createCMYKPanel(ColorDialogResult result, int imageWidths) {	
 		
 		cmykMediator = new CMYKColorMediator(result, imageWidths, 30);
@@ -147,7 +146,12 @@ public class ColorDialog extends JDialog {
 		return panel;
 	}
 	
-	
+	/**
+	 * Methode permettant de créer le slider HSV
+	 * @param result
+	 * @param imageWidths
+	 * @return (panel) HSVpanel
+	 */
 	private JPanel createHSVPanel(ColorDialogResult result, int imageWidths) {	
 		
 		//Teinte saturation valeur TSV = HSV
