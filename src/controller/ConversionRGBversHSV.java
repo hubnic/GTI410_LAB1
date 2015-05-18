@@ -1,9 +1,18 @@
 package controller;
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_1
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert
+ */
 
-import model.Pixel;
-
+/**
+ * Classe qui permet de convertir du format RGB au HSV
+ *
+ */
 public class ConversionRGBversHSV {
-	Pixel pixelRecu;
 	float H;
 	float S;
 	float V;
@@ -13,8 +22,18 @@ public class ConversionRGBversHSV {
 	float MAX;
 	float MIN;
 	
+	/**
+	 * Constructeur par defaut de la classe ConversionRGBversHSV
+	 */
 	public ConversionRGBversHSV(){}
 	
+	/**
+	 * Methode permettant de convertir le RGB vers HSV
+	 * @param rougeR (Rouge)
+	 * @param vertR	 (Vert)
+	 * @param bleuR	 (Bleu)
+	 * @return double [] tableau hsv
+	 */
 	public double[] RGBversHSV(int rougeR,int vertR,int bleuR){
 		float H = 0;
 		float S = 0;

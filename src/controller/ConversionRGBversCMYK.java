@@ -1,7 +1,14 @@
 package controller;
 
 import model.Pixel;
-
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_1
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert
+ */
 public class ConversionRGBversCMYK {
 	
 	public static int getC(Pixel pixel){

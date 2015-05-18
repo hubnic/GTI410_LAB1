@@ -1,9 +1,31 @@
 package controller;
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_1
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert
+ */
 
+/**
+ * Classe qui permet de convertir du format HSV au RGB
+ *
+ */
 public class ConversionHSVversRGB {
 
+	/**
+	 * Constructeur par defaut de la classe ConversionHSVversRGB
+	 */
 	public ConversionHSVversRGB(){}
 	
+	/**
+	 * Methode permettant de convertir le hsv eb rgb
+	 * @param hRecu (teinte)
+	 * @param sRecu (saturation)
+	 * @param vRecu (valeur)
+	 * @return int []Tableau RGB
+	 */
 	public int[] HSVversRGB (double hRecu, double sRecu, double vRecu){
 		int[] RGB_TAB =  new int[3];
 		double[] RGB_tmp =  new double[3];

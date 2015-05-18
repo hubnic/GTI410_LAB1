@@ -1,3 +1,9 @@
+/*
+Utilisation de la classe "RGBColorMediator.java", et adaptee
+pour l'espace de couleur HSV (TSV),
+tel que specifie dans l'enonce de laboratoire 1
+GTI_410
+*/
 package view;
 import java.awt.image.BufferedImage;
 
@@ -5,14 +11,16 @@ import controller.ConversionHSVversRGB;
 import controller.ConversionRGBversHSV;
 import model.ObserverIF;
 import model.Pixel;
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_1
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert
+ */
 
 
-/*
-Utilisation de la classe "RGBColorMediator.java", et adaptee
-pour l'espace de couleur HSV (TSV),
-tel que specifie dans l'enonce de laboratoire 1
-GTI_410
-*/
 /**
  * Classe permettant de mettre a jour les sliders du Panel HSV.
  * Celle-ci permet de convertir les données RGB en HSV puis HSV vers RGB
@@ -79,65 +87,126 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 	
 	/*GET*/
 	
-	
+	/**
+	 * Permet de retourner teinteImage (Hue)
+	 * @return BufferedImage (Hue)
+	 */
 	public BufferedImage getHueImage() {
 	        return teinteImage;
 	}
-		
+	/**
+	 * Permet de retourner saturationImage (s)
+	 * @return BufferedImage (Saturation)
+	 */
 	public BufferedImage getSaturationImage() {
 		        return saturationImage;
 	}
-		
+	/**
+	 * Permet de retourner saleurImage (v)
+	 * @return BufferedImage (value)
+	 */
 	public BufferedImage getValueImage() {
 		        return valeurImage;
 	}
+	
+	/**
+	 * Permet de retourner la valeur 
+	 * Teinte (Hue) contenue dans TSV_tab[0]
+	 * @return
+	 */
 	public double getHue() {
 		        return this.TSV_tab[0];
 	}
-		
+	/**
+	 * Permet de retourner la valeur 
+	 * Saturation contenue dans TSV_tab[1]
+	 * @return
+	 */	
 	public double getSaturation() {
 		        return this.TSV_tab[1];
 	}
-			
+	/**
+	 * Permet de retourner la valeur 
+	 * Value contenue dans TSV_tab[2]
+	 * @return
+	 */		
 	public double getValue() {
 		        return this.TSV_tab[2];
 	}
-		
+	/**
+	 * Permet de retourner la valeur 
+	 * Teinte (hue) contenue dans TSV_tab[0]
+	 * au format RGB (0-255.0-255.0-255)
+	 * @return
+	 */		
 	public int getHueColor() {
 		        return (int) ((TSV_tab[0] / 360) * 255);
 	}
-		
+	/**
+	 * Permet de retourner la valeur 
+	 * Saturation contenue dans TSV_tab[1]
+	 * au format RGB (0-255.0-255.0-255)
+	 * @return
+	 */		
 	public int getSaturationColor() {
 		        return (int) (TSV_tab[1] * 255);
 	}
-		
+	
+	/**
+	 * Permet de retourner la valeur 
+	 * Value contenue dans TSV_tab[2]
+	 * au format RGB (0-255.0-255.0-255)
+	 * @return
+	 */	
 	public int getValueColor() {
 				return (int) (TSV_tab[2] * 255);
 	}
 	
 	/*SET*/
+	/**
+	 * Permet d'affecter un élément au slider Teinte (Hue) + ajout observer
+	 * @param slider (ColorSlider)
+	 */
 	public void setHueCS(ColorSlider slider) {
         teinteCS = slider;
         slider.addObserver(this);
 	}
-
+	/**
+	 * Permet d'affecter un élément au slider Saturation + ajout observer
+	 * @param slider (ColorSlider)
+	 */
 	public void setSaturationCS(ColorSlider slider) {
         saturationCS = slider;
         slider.addObserver(this);
 	}
-
+	/**
+	 * Permet d'affecter un élément au slider Value + ajout observer
+	 * @param slider (ColorSlider)
+	 */
 	public void setValueCS(ColorSlider slider) {
         valeurCS = slider;
         slider.addObserver(this);
 	}
 	
 	/*COMPUTE IMAGE*/
+	/**
+	 * Permet de compute Hue (Teinte), Saturation, Valeur (value) selon un hsv recu
+	 * @param teinte
+	 * @param saturation
+	 * @param valeur
+	 */
 	private void computeImageGlobale(double teinte, double saturation, double valeur){
 		computeHueImage(teinte, saturation, valeur);
 	    computeSaturationImage(teinte, saturation, valeur);
 	    computeValueImage(teinte, saturation, valeur);
 	}
 
+	/**
+	 * Permet de compute Hue (Teinte) selon un hsv recu
+	 * @param teinte
+	 * @param saturation
+	 * @param valeur
+	 */
 	private void computeHueImage(double h, double s, double v) {
 
 		Pixel pUpdate = new Pixel (this.RVB_tab[0],this.RVB_tab[1],this.RVB_tab[2],255);
@@ -154,7 +223,12 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
              teinteCS.update(teinteImage);
 	    }		
 	}
-
+	/**
+	 * Permet de compute Saturation selon un hsv recu
+	 * @param teinte
+	 * @param saturation
+	 * @param valeur
+	 */
 	private void computeSaturationImage(double h, double s, double v) {
 
 		Pixel pUpdate = new Pixel (RVB_tab[0],RVB_tab[1],RVB_tab[2],255);
@@ -173,6 +247,12 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 	     }
 	}
 	
+	/**
+	 * Permet de compute Value selon un hsv recu
+	 * @param teinte
+	 * @param saturation
+	 * @param valeur
+	 */
 	private void computeValueImage(double h, double s, double v) {
 
 		Pixel pUpdate = new Pixel (RVB_tab[0],RVB_tab[1],RVB_tab[2],255);
@@ -191,12 +271,19 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 	}
 	
 	/*UPDATE*/
+	/**
+	 * Update les valeur de RVB_tab selon ColorDialogResult recu
+	 * @param resultR (ColorDialogResult)
+	 */
 	public void updateRVBtab(ColorDialogResult resultR){
 		RVB_tab[0]=resultR.getPixel().getRed();
 		RVB_tab[1]=resultR.getPixel().getGreen();
 		RVB_tab[2]=resultR.getPixel().getBlue();
 	}
 	
+	/**
+	 * Update selon le déplacement des sliders HSV
+	 */
 	public void update(ColorSlider cs, int v) {
 
         boolean updateHue = false;
@@ -248,8 +335,8 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 			
 			RVB_tab = this.convertisseurHsvRgb.HSVversRGB(TSV_tab[0], TSV_tab[1], TSV_tab[2]);
 		     
-			Pixel currentColor = new Pixel(RVB_tab[0], RVB_tab[1], RVB_tab[2], 255);
-	        if (currentColor.getARGB() == result.getPixel().getARGB())
+			Pixel couleur = new Pixel(RVB_tab[0], RVB_tab[1], RVB_tab[2], 255);
+	        if (couleur.getARGB() == result.getPixel().getARGB())
 	                 return;
 	         
 	        this.updateRVBtab(this.result);

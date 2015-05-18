@@ -6,6 +6,14 @@ pour l'espace de couleur CMYK, tel que specifie dans l'enonce de laboratoire
 
 package view;
 
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_1
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert
+ */
 import java.awt.image.BufferedImage;
 
 import controller.ConversionRGBversCMYK;

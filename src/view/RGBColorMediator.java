@@ -16,8 +16,6 @@
 package view;
 
 import java.awt.image.BufferedImage;
-
-import controller.ConversionRGBversHSV;
 import model.ObserverIF;
 import model.Pixel;
 
