@@ -13,30 +13,31 @@ public class ConversionRGBversHSV {
 	float MAX;
 	float MIN;
 	
-	public ConversionRGBversHSV(Pixel result){
-		pixelRecu =  result;
+	public ConversionRGBversHSV(){}
+	
+	public double[] RGBversHSV(int rougeR,int vertR,int bleuR){
+		float H = 0;
+		float S = 0;
+		float V = 0;
+		float MAX;
+		float MIN;
+		double[] TSV_TAB = new double[3];
+		  System.out.println("CONVERSION EN HSV (RGB RECU) : "+rougeR+" "+vertR+" "+bleuR);
 		
-		rouge=(pixelRecu.getRed());
-		vert= (pixelRecu.getGreen());
-		bleu=(pixelRecu.getBlue());
-		
-		MAX = Math.max(rouge, Math.max(vert,bleu));
-		MIN = Math.min(rouge, Math.min(vert, bleu));
+		MAX = Math.max(rougeR, Math.max(vertR,bleuR));
+		MIN = Math.min(rougeR, Math.min(vertR, bleuR));
 		
 		
 		//HUE CALCUL (TEINTE)
-		if(rouge == MAX){
-			System.out.println("Je suis dans la cas ou Rouge = MAX");
-			H= (60 * ((vert-bleu)/(MAX-MIN)+360))%360;
+		if(rougeR == MAX){
+			H= (60 * ((vertR-bleuR)/(MAX-MIN)+360))%360;
 		}
 		
-		if(vert == MAX){
-			System.out.println("Je suis dans la cas ou Vert = MAX");
-			H= 60 * ((bleu-rouge)/(MAX-MIN)) + 120;
+		if(vertR == MAX){
+			H= 60 * ((bleuR-rougeR)/(MAX-MIN)) + 120;
 		}
-		if(bleu == MAX){
-			System.out.println("Je suis dans la cas ou Bleu = MAX");
-			H= 60 * ((rouge-vert)/(MAX-MIN)) + 240;
+		if(bleuR == MAX){
+			H= 60 * ((rougeR-vertR)/(MAX-MIN)) + 240;
 		}
 		if( H < 0 ){
 			  H += 360;
@@ -54,20 +55,14 @@ public class ConversionRGBversHSV {
 		}
 		
 		//VALEUR
-		V=Math.max(rouge/255, Math.max(vert/255,bleu/255));
+		V=Math.max(rougeR/255, Math.max(vertR/255,bleuR/255));
+		TSV_TAB[0]=H;
+		TSV_TAB[1]=S;
+		TSV_TAB[2]=V;
 		
-	}
-	
-	
-	
-	public int getH(){
-		return (int)this.H;
-	}
-	public int getS(){
-		return (int)this.S;
-	}
-	public int getV(){
-		return (int)this.V;
+		System.out.println("COULEUR EN HSV : "+TSV_TAB[0]+" "+TSV_TAB[1]+" "+TSV_TAB[2]);
+		
+		return TSV_TAB;
 	}
 	
 	

@@ -110,8 +110,7 @@ class RGBColorMediator extends Object implements SliderObserver, ObserverIF {
 			p.setGreen((int)(((double)i / (double)imagesWidth)*255.0)); 
 			int rgb = p.getARGB();
 			for (int j = 0; j<imagesHeight; ++j) {
-				System.out.println("je suis ici "+j);
-				greenImage.setRGB(i, j, rgb);
+					greenImage.setRGB(i, j, rgb);
 			}
 		}
 		if (greenCS != null) {

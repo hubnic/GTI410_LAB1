@@ -1,5 +1,8 @@
 package view;
 import java.awt.image.BufferedImage;
+
+import controller.ConversionHSVversRGB;
+import controller.ConversionRGBversHSV;
 import model.ObserverIF;
 import model.Pixel;
 
@@ -10,7 +13,13 @@ pour l'espace de couleur HSV (TSV),
 tel que specifie dans l'enonce de laboratoire 1
 GTI_410
 */
-
+/**
+ * Classe permettant de mettre a jour les sliders du Panel HSV.
+ * Celle-ci permet de convertir les données RGB en HSV puis HSV vers RGB
+ * grace aux classes de conversion : ConversionHSVversRGB  et ConversionRGBversHSV
+ * afin de mettre a jour la couleur de l objet dessiner sur le panneau
+ *
+ */
 class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 	//LES DIMENSIONS DE L'IMAGE
 	int imagesWidth;
@@ -24,9 +33,12 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 
 	//COULEUR EN HSV DANS TAB
 	double[] TSV_tab = new double[3];
-	
 	//COULEUR EN RVB DANS TAB
 	int[] RVB_tab = new int [3];
+	
+	//LES CONVERTISSEURS
+	ConversionHSVversRGB convertisseurHsvRgb = new ConversionHSVversRGB();
+	ConversionRGBversHSV convertisseurRgbHsv = new ConversionRGBversHSV();
 	
 	//BUFFERED IMAGE TSV
 	BufferedImage teinteImage;
@@ -36,35 +48,101 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 	//LE RESULTAT DES COULEURS
 	ColorDialogResult result;
 	
-	
+	/**
+	 * Constructeur de la classe HSVColorMediator
+	 * @param result
+	 * @param imagesWidthR (taille de l image)
+	 * @param imagesHeightR (taille de l image)
+	 */
 	HSVColorMediator(ColorDialogResult result, int imagesWidthR, int imagesHeightR) {
 		
-		RVB_tab[0]=result.getPixel().getRed();
-		RVB_tab[1]=result.getPixel().getGreen();
-		RVB_tab[2]=result.getPixel().getBlue();
-		
+		//ON RECUPERE LES VALEURS DU PIXEL ET ON LES ATTRIBUT A TAB RVB
+		this.updateRVBtab(result);
+		//ON RECUPERE LES DIMENSIONS DE l IMAGE
 		this.imagesHeight = imagesHeightR;
 		this.imagesWidth = imagesWidthR;
+		//ON RECUPERE LES DIMENSIONS DE l IMAGE
 		this.result = result;
 		result.addObserver(this);
+		
+		//BUFF IMAGE
 		teinteImage = new BufferedImage(imagesWidth, imagesHeight,BufferedImage.TYPE_INT_ARGB);
 		saturationImage = new BufferedImage(imagesWidth, imagesHeight,BufferedImage.TYPE_INT_ARGB);
 		valeurImage = new BufferedImage(imagesWidth, imagesHeight,BufferedImage.TYPE_INT_ARGB);
 		
+		//ON CONVERTIT LES RGB EN HSV
+		TSV_tab = convertisseurRgbHsv.RGBversHSV(RVB_tab[0], RVB_tab[1], RVB_tab[2]);
 		
-		
-		TSV_tab = this.conversionRGBversHSV(RVB_tab[0], RVB_tab[1], RVB_tab[2]);
-		
-		this.computeImageGlobale(TSV_tab[0], TSV_tab[1], TSV_tab[2]);
+		//COMPUTE IMAGE SELON HSV
+		computeImageGlobale(TSV_tab[0], TSV_tab[1], TSV_tab[2]);
 	}
 	
+	/*GET*/
 	
+	
+	public BufferedImage getHueImage() {
+	        return teinteImage;
+	}
+		
+	public BufferedImage getSaturationImage() {
+		        return saturationImage;
+	}
+		
+	public BufferedImage getValueImage() {
+		        return valeurImage;
+	}
+	public double getHue() {
+		        return this.TSV_tab[0];
+	}
+		
+	public double getSaturation() {
+		        return this.TSV_tab[1];
+	}
+			
+	public double getValue() {
+		        return this.TSV_tab[2];
+	}
+		
+	public int getHueColor() {
+		        return (int) ((TSV_tab[0] / 360) * 255);
+	}
+		
+	public int getSaturationColor() {
+		        return (int) (TSV_tab[1] * 255);
+	}
+		
+	public int getValueColor() {
+				return (int) (TSV_tab[2] * 255);
+	}
+	
+	/*SET*/
+	public void setHueCS(ColorSlider slider) {
+        teinteCS = slider;
+        slider.addObserver(this);
+	}
+
+	public void setSaturationCS(ColorSlider slider) {
+        saturationCS = slider;
+        slider.addObserver(this);
+	}
+
+	public void setValueCS(ColorSlider slider) {
+        valeurCS = slider;
+        slider.addObserver(this);
+	}
+	
+	/*COMPUTE IMAGE*/
+	private void computeImageGlobale(double teinte, double saturation, double valeur){
+		computeHueImage(teinte, saturation, valeur);
+	    computeSaturationImage(teinte, saturation, valeur);
+	    computeValueImage(teinte, saturation, valeur);
+	}
 
 	private void computeHueImage(double h, double s, double v) {
 
 		Pixel pUpdate = new Pixel (this.RVB_tab[0],this.RVB_tab[1],this.RVB_tab[2],255);
 				for (int i = 0; i < imagesWidth; ++i) {
-		            RVB_tab = this.conversionHSVversRGB((((double) i / (double) imagesWidth) * 360),s, v);
+		            RVB_tab = this.convertisseurHsvRgb.HSVversRGB((((double) i / (double) imagesWidth) * 360),s, v);
 		
 		            pUpdate.setRed(RVB_tab[0]);pUpdate.setGreen(RVB_tab[1]);pUpdate.setBlue(RVB_tab[2]);
 
@@ -82,7 +160,7 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 		Pixel pUpdate = new Pixel (RVB_tab[0],RVB_tab[1],RVB_tab[2],255);
 		
 			for (int i = 0; i < imagesWidth; ++i) {
-				RVB_tab = this.conversionHSVversRGB(h,((double) i / (double) imagesWidth), v);
+				RVB_tab = this.convertisseurHsvRgb.HSVversRGB(h,((double) i / (double) imagesWidth), v);
 	
 	            pUpdate.setRed(RVB_tab[0]);pUpdate.setGreen(RVB_tab[1]);pUpdate.setBlue(RVB_tab[2]);
 
@@ -99,7 +177,7 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 
 		Pixel pUpdate = new Pixel (RVB_tab[0],RVB_tab[1],RVB_tab[2],255);
 			for (int i = 0; i < imagesWidth; ++i) {
-				RVB_tab = this.conversionHSVversRGB(h,s, ((double) i / (double) imagesWidth));
+				RVB_tab = this.convertisseurHsvRgb.HSVversRGB(h,s, ((double) i / (double) imagesWidth));
 	
 	            pUpdate.setRed(RVB_tab[0]);pUpdate.setGreen(RVB_tab[1]);pUpdate.setBlue(RVB_tab[2]);
 	
@@ -112,131 +190,13 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 	    }
 	}
 	
-
-	public int[] conversionHSVversRGB (double hRecu, double sRecu, double vRecu){
-		int[] RGB_TAB =  new int[3];
-		double[] RGB_tmp =  new double[3];
-		double c;
-		double x;
-		double m;
-		c= (vRecu * sRecu);
-		x = c * (1-Math.abs((hRecu/60 % 2) -1));
-		m= (vRecu - c);
-		 System.out.println("CONVERSION EN RGB (c,x,m) : "+c+" "+x+" "+m);
-        System.out.println("CONVERSION EN RGB (HSV RECU) : "+hRecu+" "+sRecu+" "+vRecu);
-
-		if(hRecu>=0 & hRecu<60){
-			RGB_tmp[0]= c;
-			RGB_tmp[1]= x;
-			RGB_tmp[2]= 0;
-		}
-		else if(hRecu>=60 & hRecu<120){
-			RGB_tmp[0]= x;
-			RGB_tmp[1]= c;
-			RGB_tmp[2]= 0;
-		}
-		else if(hRecu>=120 & hRecu<180){
-			RGB_tmp[0]= 0;
-			RGB_tmp[1]= c;
-			RGB_tmp[2]= x;
-		}
-		else if(hRecu>=180 & hRecu<240){
-			RGB_tmp[0]= 0;
-			RGB_tmp[1]= x;
-			RGB_tmp[2]= c;
-		}
-		else if(hRecu>=240 & hRecu<300){
-			RGB_tmp[0]= x;
-			RGB_tmp[1]= 0;
-			RGB_tmp[2]= c;
-		}
-		else if(hRecu>=300 & hRecu<360){
-			RGB_tmp[0]= c;
-			RGB_tmp[1]= 0;
-			RGB_tmp[2]= x;
-		}
-		RGB_TAB[0]= (int) Math.round((RGB_tmp[0]+m)*255);
-		RGB_TAB[1]= (int) Math.round((RGB_tmp[1]+m)*255);
-		RGB_TAB[2]= (int) Math.round((RGB_tmp[2]+m)*255);
-        
-        System.out.println("CONVERSION EN RGB : "+RGB_TAB[0]+" "+RGB_TAB[1]+" "+RGB_TAB[2]);
-        
-		return RGB_TAB;
+	/*UPDATE*/
+	public void updateRVBtab(ColorDialogResult resultR){
+		RVB_tab[0]=resultR.getPixel().getRed();
+		RVB_tab[1]=resultR.getPixel().getGreen();
+		RVB_tab[2]=resultR.getPixel().getBlue();
 	}
 	
-	public double[] conversionRGBversHSV(int rougeR,int vertR,int bleuR){
-		float H = 0;
-		float S = 0;
-		float V = 0;
-		float MAX;
-		float MIN;
-		double[] TSV_TAB = new double[3];
-		  System.out.println("CONVERSION EN HSV (RGB RECU) : "+rougeR+" "+vertR+" "+bleuR);
-		
-		MAX = Math.max(rougeR, Math.max(vertR,bleuR));
-		MIN = Math.min(rougeR, Math.min(vertR, bleuR));
-		
-		
-		//HUE CALCUL (TEINTE)
-		if(rougeR == MAX){
-			H= (60 * ((vertR-bleuR)/(MAX-MIN)+360))%360;
-		}
-		
-		if(vertR == MAX){
-			H= 60 * ((bleuR-rougeR)/(MAX-MIN)) + 120;
-		}
-		if(bleuR == MAX){
-			H= 60 * ((rougeR-vertR)/(MAX-MIN)) + 240;
-		}
-		if( H < 0 ){
-			  H += 360;
-		}
-	      
-		if(MAX == MIN){
-			H= 0;
-		}
-		
-		//SATURATION
-		if(MAX==0){
-			S=0;
-		}else if(MAX!=0){
-			S=1-(MIN/MAX);
-		}
-		
-		//VALEUR
-		V=Math.max(rougeR/255, Math.max(vertR/255,bleuR/255));
-		TSV_TAB[0]=H;
-		TSV_TAB[1]=S;
-		TSV_TAB[2]=V;
-		
-		System.out.println("COULEUR EN HSV : "+TSV_TAB[0]+" "+TSV_TAB[1]+" "+TSV_TAB[2]);
-		
-		return TSV_TAB;
-	}
-
-	public void update() {
-		
-		 RVB_tab = this.conversionHSVversRGB(TSV_tab[0], TSV_tab[1], TSV_tab[2]);
-	     
-		Pixel currentColor = new Pixel(RVB_tab[0], RVB_tab[1], RVB_tab[2], 255);
-         if (currentColor.getARGB() == result.getPixel().getARGB())
-                 return;
-         
-         RVB_tab[0]=this.result.getPixel().getRed();
-         RVB_tab[1]=this.result.getPixel().getGreen();
-         RVB_tab[2]=this.result.getPixel().getBlue();
-         
-         TSV_tab= this.conversionRGBversHSV(RVB_tab[0], RVB_tab[1],RVB_tab[2]);
-         
-         teinteCS.setValue((int) ((((TSV_tab[0] / 360) * 255))));
-         saturationCS.setValue((int) ((TSV_tab[1] * 255)));
-         valeurCS.setValue((int) ((TSV_tab[2] * 255)));
-     
-         this.computeImageGlobale(TSV_tab[0], TSV_tab[1], TSV_tab[2]);
-         
-	}
-
-
 	public void update(ColorSlider cs, int v) {
 
         boolean updateHue = false;
@@ -276,80 +236,38 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
                 computeValueImage(TSV_tab[0], TSV_tab[1], TSV_tab[2]);
         }
 
-        RVB_tab = this.conversionHSVversRGB(TSV_tab[0], TSV_tab[1], TSV_tab[2]);
+        RVB_tab = this.convertisseurHsvRgb.HSVversRGB(TSV_tab[0], TSV_tab[1], TSV_tab[2]);
 
 
         Pixel pixel = new Pixel(RVB_tab[0],RVB_tab[1], RVB_tab[2],255);
         this.result.setPixel(pixel);
 	}
 	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-		public BufferedImage getHueImage() {
-		        return teinteImage;
-		}
-		
-		public BufferedImage getSaturationImage() {
-		        return saturationImage;
-		}
-		
-		public BufferedImage getValueImage() {
-		        return valeurImage;
-		}
-		
-		public void setHueCS(ColorSlider slider) {
-		        teinteCS = slider;
-		        slider.addObserver(this);
-		}
-		
-		public void setSaturationCS(ColorSlider slider) {
-		        saturationCS = slider;
-		        slider.addObserver(this);
-		}
-		
-		public void setValueCS(ColorSlider slider) {
-		        valeurCS = slider;
-		        slider.addObserver(this);
-		}
-		
-		public double getHue() {
-		        return this.TSV_tab[0];
-		}
-		
-		public double getSaturation() {
-		        return this.TSV_tab[1];
-		}
-		
-		
-		public double getValue() {
-		        return this.TSV_tab[2];
-		}
-		
-		public int getHueColor() {
-		        return (int) ((TSV_tab[0] / 360) * 255);
-		}
-		
-		public int getSaturationColor() {
-		        return (int) (TSV_tab[1] * 255);
-		}
-		
-		public int getValueColor() {
-		        return (int) (TSV_tab[2] * 255);
-		}
-		
-		void computeImageGlobale(double teinte, double saturation, double valeur){
-			computeHueImage(teinte, saturation, valeur);
-		    computeSaturationImage(teinte, saturation, valeur);
-		    computeValueImage(teinte, saturation, valeur);
+			
+	public void update() {
+			
+			RVB_tab = this.convertisseurHsvRgb.HSVversRGB(TSV_tab[0], TSV_tab[1], TSV_tab[2]);
+		     
+			Pixel currentColor = new Pixel(RVB_tab[0], RVB_tab[1], RVB_tab[2], 255);
+	        if (currentColor.getARGB() == result.getPixel().getARGB())
+	                 return;
+	         
+	        this.updateRVBtab(this.result);
+	         
+	        TSV_tab= this.convertisseurRgbHsv.RGBversHSV(RVB_tab[0], RVB_tab[1],RVB_tab[2]);
+	         
+	        teinteCS.setValue((int) ((((TSV_tab[0] / 360) * 255))));
+	        saturationCS.setValue((int) ((TSV_tab[1] * 255)));
+	        valeurCS.setValue((int) ((TSV_tab[2] * 255)));
+	     
+	        this.computeImageGlobale(TSV_tab[0], TSV_tab[1], TSV_tab[2]);
+	 		// Efficiency issue: When the color is adjusted on a tab in the 
+	 		// user interface, the sliders color of the other tabs are recomputed,
+	 		// even though they are invisible. For an increased efficiency, the 
+	 		// other tabs (mediators) should be notified when there is a tab 
+	 		// change in the user interface. This solution was not implemented
+	 		// here since it would increase the complexity of the code, making it
+	 		// harder to understand.
 		}
 
 }
