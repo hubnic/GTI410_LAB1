@@ -41,7 +41,7 @@ public class ConversionRGBversHSV {
 		float MAX;
 		float MIN;
 		double[] TSV_TAB = new double[3];
-		  System.out.println("CONVERSION EN HSV (RGB RECU) : "+rougeR+" "+vertR+" "+bleuR);
+		 // System.out.println("CONVERSION EN HSV (RGB RECU) : "+rougeR+" "+vertR+" "+bleuR);
 		
 		MAX = Math.max(rougeR, Math.max(vertR,bleuR));
 		MIN = Math.min(rougeR, Math.min(vertR, bleuR));
@@ -79,7 +79,7 @@ public class ConversionRGBversHSV {
 		TSV_TAB[1]=S;
 		TSV_TAB[2]=V;
 		
-		System.out.println("COULEUR EN HSV : "+TSV_TAB[0]+" "+TSV_TAB[1]+" "+TSV_TAB[2]);
+		//System.out.println("COULEUR EN HSV : "+TSV_TAB[0]+" "+TSV_TAB[1]+" "+TSV_TAB[2]);
 		
 		return TSV_TAB;
 	}

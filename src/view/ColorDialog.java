@@ -129,21 +129,21 @@ public class ColorDialog extends JDialog {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		ColorSlider csC = new ColorSlider("C:", ConversionRGBversCMYK.getC(result.getPixel()), cmykMediator.getCImage());
-		ColorSlider csM = new ColorSlider("M:", ConversionRGBversCMYK.getM(result.getPixel()), cmykMediator.getMImage());
-		ColorSlider csY = new ColorSlider("Y:", ConversionRGBversCMYK.getY(result.getPixel()), cmykMediator.getYImage());
-		//ColorSlider csK = new ColorSlider("K:", result.getPixel().getK(), cmykMediator.getKImage());
+		ColorSlider csC = new ColorSlider("C:", cmykMediator.getC(), cmykMediator.getCImage());
+		ColorSlider csM = new ColorSlider("M:", cmykMediator.getM(), cmykMediator.getMImage());
+		ColorSlider csY = new ColorSlider("Y:", cmykMediator.getY(), cmykMediator.getYImage());
+		ColorSlider csK = new ColorSlider("K:", cmykMediator.getK(), cmykMediator.getKImage());
 		
 		cmykMediator.setCCS(csC);
 		cmykMediator.setMCS(csM);
 		cmykMediator.setYCS(csY);
-		//cmykMediator.setKCS(csK);
+		cmykMediator.setKCS(csK);
 		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(csC);
 		panel.add(csM);
 		panel.add(csY);
-		//panel.add(csK);
+		panel.add(csK);
 		return panel;
 	}
 	
