@@ -1,6 +1,6 @@
 
 /*
-Code copie de la classe "RGBColorMediator.java", et adapte
+Code copie de la classe "RGBColorMediator.java", et adaptée
 pour l'espace de couleur CMYK, tel que specifie dans l'enonce de laboratoire
 */
 
@@ -21,11 +21,14 @@ import model.ObserverIF;
 import model.Pixel;
 
 class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
+	
+	//déclarations des sliders des différents
 	ColorSlider cCS;
 	ColorSlider mCS;
 	ColorSlider yCS;
 	ColorSlider kCS;
 	
+	//déclaration des couleurs RGB et CMYK utilisées dans la classe
 	double c;
 	double m;
 	double y;
@@ -61,14 +64,17 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 		this.result = result;
 		result.addObserver(this);
 		
+		//On crée les images de fond des sliders
 		cImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
 		mImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
 		yImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
 		kImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
-		computeCImage(c, m, y, k);
-		System.out.println("RED: " + result.getPixel().getRed());
+
+		/*System.out.println("RED: " + result.getPixel().getRed());
 		System.out.println("GREEN: " + result.getPixel().getGreen());
-		System.out.println("BLUE: " + result.getPixel().getBlue());
+		System.out.println("BLUE: " + result.getPixel().getBlue());*/
+		
+		computeCImage(c, m, y, k);
 		computeMImage(c, m, y, k);
 		computeYImage(c, m, y, k);
 		computeKImage(c, m, y, k); 
@@ -130,6 +136,8 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 		result.setPixel(pixel);
 	}
 	
+	
+	//On calcul chaque image selon la valeur des "sliders"
 	public void computeCImage(double c, double m, double y, double k) { 
 		Pixel p = new Pixel(ConversionRGBversCMYK.getR(c, k),
 							ConversionRGBversCMYK.getG(m, k), 
