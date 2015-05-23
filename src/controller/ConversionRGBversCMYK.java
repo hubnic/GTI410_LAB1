@@ -7,7 +7,7 @@ import model.Pixel;
  * 
  * EQUIPE : 
  * 			Idriss Aissou AISI01088901
- * 			Nicolas Hubert
+ * 			Nicolas Hubert HUBN30099004
  */
 
 //Les formules sont tirées du site :  http://www.rapidtables.com/convert/color/rgb-to-cmyk.htm et http://www.rapidtables.com/convert/color/cmyk-to-rgb.htm

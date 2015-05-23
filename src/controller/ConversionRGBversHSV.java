@@ -6,7 +6,7 @@ package controller;
  * 
  * EQUIPE : 
  * 			Idriss Aissou AISI01088901
- * 			Nicolas Hubert
+ * 			Nicolas Hubert HUBN30099004
  */
 
 /**

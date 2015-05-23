@@ -17,7 +17,7 @@ import model.Pixel;
  * 
  * EQUIPE : 
  * 			Idriss Aissou AISI01088901
- * 			Nicolas Hubert
+ * 			Nicolas Hubert HUBN30099004
  */
 
 
@@ -268,6 +268,23 @@ class HSVColorMediator extends Object implements SliderObserver, ObserverIF {
 	    if (valeurCS != null) {
 	    	  valeurCS.update(valeurImage);
 	    }
+	}
+	
+	/**
+	 * Permet de retourner les valeur HSV
+	 * en chaine de caracteres
+	 * @return String
+	 */
+	public String toStringHSV(){
+		return ("H : "+TSV_tab[0]+" S : "+TSV_tab[1]+" V : "+TSV_tab[2]);
+	}
+	/**
+	 * Permet de retourner les valeur RGB 
+	 * en chaine de caracteres
+	 * @return String
+	 */
+	public String toStringRGB(){
+		return ("ROUGE : "+RVB_tab[0]+" VERT : "+RVB_tab[1]+" BLEU : "+RVB_tab[2]);
 	}
 	
 	/*UPDATE*/
