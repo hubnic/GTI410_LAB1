@@ -70,9 +70,7 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 		yImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
 		kImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
 
-		/*System.out.println("RED: " + result.getPixel().getRed());
-		System.out.println("GREEN: " + result.getPixel().getGreen());
-		System.out.println("BLUE: " + result.getPixel().getBlue());*/
+	
 		
 		computeCImage(c, m, y, k);
 		computeMImage(c, m, y, k);
@@ -85,16 +83,14 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 	 * @see View.SliderObserver#update(double)
 	 */
 	public void update(ColorSlider s, int v) {
-		System.out.println("V: "+v);
+		
 		boolean updateC = false;
 		boolean updateM = false;
 		boolean updateY = false;
 		boolean updateK = false;
 		if (s == cCS && v != this.getC()) {
 			
-			System.out.println("update V: "+ v);
 			c = ((double)v/255);
-			System.out.println("update C: "+ c);
 			updateM = true;
 			updateY = true;
 			updateK = true;
@@ -142,16 +138,13 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 		Pixel p = new Pixel(ConversionRGBversCMYK.getR(c, k),
 							ConversionRGBversCMYK.getG(m, k), 
 							ConversionRGBversCMYK.getB(y, k), 255); 
-		System.out.println("Cimage C,M,Y,K:  " +c+" "+m+" "+y+" "+k);
+
 		for (int i = 0; i<imagesWidth; ++i) {
-			System.out.println("Set Rouge: " + c + m + y + k);
+
 			p.setRed((int)(ConversionRGBversCMYK.getR(((double)i / (double)imagesWidth),k))); 
 			p.setGreen((int)(ConversionRGBversCMYK.getG(m,k))); 
 			p.setBlue((int)(ConversionRGBversCMYK.getB(y,k))); 
-			System.out.println("C: "+  c);
-			System.out.println("M: "+ ConversionRGBversCMYK.getM(p));
-			System.out.println("Y: "+ ConversionRGBversCMYK.getY(p));
-			System.out.println("K: "+ ConversionRGBversCMYK.getK(p));
+		
 			int rgb = p.getARGB();
 			for (int j = 0; j<imagesHeight; ++j) {
 				cImage.setRGB(i, j, rgb);
@@ -166,7 +159,7 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 		Pixel p = new Pixel(ConversionRGBversCMYK.getR(c, k),
 							ConversionRGBversCMYK.getG(m, k), 
 							ConversionRGBversCMYK.getB(y, k), 255);
-		System.out.println("Mimage C,M,Y,K:  " +c+" "+m+" "+y+" "+k);
+		
 		for (int i = 0; i<imagesWidth; ++i) {
 			p.setGreen((int)(ConversionRGBversCMYK.getG(((double)i / (double)imagesWidth),k))); 
 			int rgb = p.getARGB();
@@ -184,7 +177,7 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 		Pixel p = new Pixel(ConversionRGBversCMYK.getR(c, k),
 				ConversionRGBversCMYK.getG(m, k), 
 				ConversionRGBversCMYK.getB(y, k), 255);
-		System.out.println("Yimage C,M,Y,K:  " +c+" "+m+" "+y+" "+k);
+
 		for (int i = 0; i<imagesWidth; ++i) {
 			p.setBlue((int)(ConversionRGBversCMYK.getB(((double)i / (double)imagesWidth),k))); 
 			//p.setBlue((int)(ConversionRGBversCMYK.getB(((double)i / (double)imagesWidth*255.0),k))); 
@@ -201,9 +194,9 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 		Pixel p = new Pixel(ConversionRGBversCMYK.getR(c, k),
 				ConversionRGBversCMYK.getG(m, k), 
 				ConversionRGBversCMYK.getB(y, k), 255); 
-		System.out.println("Kimage C,M,Y,K:  " +c+" "+m+" "+y+" "+k);
+
 		for (int i = 0; i<imagesWidth; ++i) {
-			System.out.println("Kimage C,M,Y,K:  " +c+" "+m+" "+y+" "+k);
+
 			p.setRed((int)(ConversionRGBversCMYK.getR(c,((double)i / (double)imagesWidth)))); 
 			p.setGreen((int)(ConversionRGBversCMYK.getG(m,((double)i / (double)imagesWidth)))); 
 			p.setBlue((int)(ConversionRGBversCMYK.getB(y,((double)i / (double)imagesWidth)))); 
@@ -275,7 +268,6 @@ class CMYKColorMediator extends Object implements SliderObserver, ObserverIF {
 	 * @return
 	 */
 	public int getC() {
-		System.out.println("C: " + c);
 		return (int)(c * 255);
 	}
 

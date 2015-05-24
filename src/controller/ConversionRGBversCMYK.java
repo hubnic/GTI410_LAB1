@@ -36,7 +36,7 @@ public class ConversionRGBversCMYK {
 		}
 		else{
 		double green = (double)pixel.getGreen()/255;
-		System.out.println("Green:" + green);
+
 		return (1-green-getK(pixel))/(1-getK(pixel));
 		}
 	}
@@ -50,7 +50,7 @@ public class ConversionRGBversCMYK {
 		}
 		else{
 		double blue = (double)pixel.getBlue()/255;
-		System.out.println("Blue:" + blue);
+
 		return (1-blue-getK(pixel))/(1-getK(pixel));
 		}
 		
@@ -72,8 +72,7 @@ public class ConversionRGBversCMYK {
 	 * @return rouge, renvoi la valeur de la couleur rouge convertie
 	 */
 	public static int getR(double c, double k){
-		System.out.println("C: " + c +"K: " + k);
-		System.out.println("Rouge: " + (int) ((1-c)*(1-k)));
+
 		return   (int) (int) ((1-c)*(1-k)*255);
 	}
 	/**

@@ -38,8 +38,7 @@ public class ConversionHSVversRGB {
 		c= (vRecu * sRecu);
 		x = c * (1-Math.abs((hRecu/60 % 2) -1));
 		m= (vRecu - c);
-		 System.out.println("CONVERSION EN RGB (c,x,m) : "+c+" "+x+" "+m);
-        System.out.println("CONVERSION EN RGB (HSV RECU) : "+hRecu+" "+sRecu+" "+vRecu);
+
 
 		if(hRecu>=0 & hRecu<60){
 			RGB_tmp[0]= c;
@@ -75,7 +74,6 @@ public class ConversionHSVversRGB {
 		RGB_TAB[1]= (int) Math.round((RGB_tmp[1]+m)*255);
 		RGB_TAB[2]= (int) Math.round((RGB_tmp[2]+m)*255);
         
-        System.out.println("CONVERSION EN RGB : "+RGB_TAB[0]+" "+RGB_TAB[1]+" "+RGB_TAB[2]);
         
 		return RGB_TAB;
 	}
