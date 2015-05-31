@@ -32,14 +32,16 @@ import java.util.Stack;
  */
 public class ImageLineFiller extends AbstractTransformer {
 	private ImageX currentImage;
-	private int currentImageWidth;
+	private int currentImageWidth;		//Largeur de l image
+	private int currentImageHeight;  //Hauteur de l image
 	private Pixel fillColor = new Pixel(0xFF00FFFF);
 	private Pixel borderColor = new Pixel(0xFFFFFF00);
 	private boolean floodFill = true;
 	private int hueThreshold = 1;
 	private int saturationThreshold = 2;
 	private int valueThreshold = 3;
-	
+	private int xBase;
+	private int yBase;
 	/**
 	 * Creates an ImageLineFiller with default parameters.
 	 * Default pixel change color is black.
@@ -58,12 +60,15 @@ public class ImageLineFiller extends AbstractTransformer {
 			Shape shape = (Shape)intersectedObjects.get(0);
 			if (shape instanceof ImageX) {
 				currentImage = (ImageX)shape;
-				currentImageWidth = currentImage.getImageWidth();
-
-				Point pt = e.getPoint();
+				currentImageWidth = currentImage.getImageWidth();	//Recupere valeur largeur image
+				currentImageHeight = currentImage.getImageHeight(); //Recupere valeur hauteur image
+				Point pt = e.getPoint();		//recupere le point clique
 				Point ptTransformed = new Point();
 				try {
 					shape.inverseTransformPoint(pt, ptTransformed);
+					System.out.println(" pt.x "+pt.x+" "+" pt.y "+pt.y);
+					System.out.println(" ptTransformed.x "+ptTransformed.x+" "+" ptTransformed.y "+ptTransformed.y);
+	
 				} catch (NoninvertibleTransformException e1) {
 					e1.printStackTrace();
 					return false;
@@ -72,7 +77,19 @@ public class ImageLineFiller extends AbstractTransformer {
 				if (0 <= ptTransformed.x && ptTransformed.x < currentImage.getImageWidth() &&
 				    0 <= ptTransformed.y && ptTransformed.y < currentImage.getImageHeight()) {
 					currentImage.beginPixelUpdate();
-					horizontalLineFill(ptTransformed);
+					
+					//FloodFill
+					if(floodFill){
+						//floodFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
+						floodFillRecursive(ptTransformed); //Mode Recursive
+					}
+					//BoundaryFill
+					else{
+						//boundaryFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
+						boundaryFillRecursive(ptTransformed); //Mode Recursive
+					}
+					//horizontalLineFill(ptTransformed);
+					
 					currentImage.endPixelUpdate();											 	
 					return true;
 				}
@@ -108,6 +125,87 @@ public class ImageLineFiller extends AbstractTransformer {
 		// TODO EP In this method, we could test if a pixel needs to be filled before
 		//      adding it to the stack (to reduce memory needs and increase efficiency).
 	}
+	
+	private void floodFillStack(Point pointRecu) {
+		Stack<Point> pilePoint = new <Point>Stack();
+        pilePoint.add(new Point(pointRecu.x, pointRecu.y));
+
+        while(!pilePoint.isEmpty()) {
+            Point pointRecupere = pilePoint.pop();
+            int x = pointRecupere.x;
+            int y = pointRecupere.y;
+
+            if(positionValide(x,y)){
+            	         
+	            if(currentImage.getPixel(x,y).equals(borderColor)){
+	                
+	            	currentImage.setPixel(x, y, fillColor);
+	            	pilePoint.push(new Point(x+1, y));
+	            	pilePoint.push(new Point(x-1, y));
+	            	pilePoint.push(new Point(x, y+1));
+	            	pilePoint.push(new Point(x, y-1));
+	            }
+           }
+        }
+	}
+	private void floodFillRecursive(Point pointRecu) {
+		int x = pointRecu.x;
+        int y = pointRecu.y;
+        if(positionValide(x,y)){
+    		if(currentImage.getPixel(x, y).equals(borderColor)){
+    			currentImage.setPixel(x, y, fillColor);
+    			
+    			floodFillRecursive(new Point(x-1, y));
+    			floodFillRecursive(new Point(x+1, y));
+    			floodFillRecursive(new Point(x, y-1));
+    			floodFillRecursive(new Point(x, y+1));
+    			
+    		}
+        }
+
+    }
+	
+	
+	
+	
+	private void boundaryFillStack(Point pointRecu){
+	        Stack<Point> pilePoint = new <Point>Stack();
+	        pilePoint.add(new Point(pointRecu.x, pointRecu.y));
+
+	        while(!pilePoint.isEmpty()) {
+	        	   Point pointRecupere = pilePoint.pop();
+	               int x = pointRecupere.x;
+	               int y = pointRecupere.y;
+
+	            if(positionValide(x,y)){
+	            	         
+		            if(!currentImage.getPixel(x, y).equals(borderColor) && !currentImage.getPixel(x,y).equals(fillColor)){
+		                
+		            	currentImage.setPixel(x, y, fillColor);
+		            	pilePoint.push(new Point(x+1, y));
+		            	pilePoint.push(new Point(x-1, y));
+		            	pilePoint.push(new Point(x, y+1));
+		            	pilePoint.push(new Point(x, y-1));
+		            }
+	           }
+	        }
+	    }
+	private void boundaryFillRecursive(Point pointRecu) {
+		int x = pointRecu.x;
+        int y = pointRecu.y;
+        if(positionValide(x,y)){
+    		if(!currentImage.getPixel(x, y).equals(fillColor) && !currentImage.getPixel(x, y).equals(borderColor)){
+    			currentImage.setPixel(pointRecu.x, pointRecu.y, fillColor);
+    			
+    			boundaryFillRecursive(new Point(x-1, y));
+    			boundaryFillRecursive(new Point(x+1, y));
+    			boundaryFillRecursive(new Point(x, y-1));
+    			boundaryFillRecursive(new Point(x, y+1));
+    			
+    		}
+        }
+	}
+
 	
 	/**
 	 * @return
@@ -201,5 +299,27 @@ public class ImageLineFiller extends AbstractTransformer {
 		valueThreshold = i;
 		System.out.println("new Value Threshold " + i);
 	}
+	
+	//**************Fonctions*****
+	
+	/**
+	 * Fonction qui retourne si le point est dans la zone de l image ou non
+	 * @param pointRecu
+	 * @return Boolean
+	 */
+	public Boolean positionValide(int pointX, int pointY){
+		
+		if (0 <= pointX && pointX < currentImageWidth &&
+			    0 <= pointY && pointY < currentImageHeight) {
+			//System.out.println("Point Valide"+ " X "+pointX +" Y "+pointY);
+			return true;
+		}
+		else{
+			//System.out.println("Point Refuse" + " X "+pointX +" Y "+pointY);
+			return false;
+		}
+	}
+	
+	
 
 }
