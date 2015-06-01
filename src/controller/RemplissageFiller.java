@@ -41,7 +41,7 @@ public class RemplissageFiller extends AbstractTransformer {
 	private int hueThreshold = 1;
 	private int saturationThreshold = 2;
 	private int valueThreshold = 3;
-	private ConversionRGBversHSV convertisseur;
+	//private ConversionRGBversHSV convertisseur;
 
 	/**
 	 * Creates an ImageLineFiller with default parameters.
@@ -49,7 +49,7 @@ public class RemplissageFiller extends AbstractTransformer {
 	 */
 	public RemplissageFiller() {
 		
-		ConversionRGBversHSV convertisseur = new ConversionRGBversHSV();
+		
 	}
 	
 	/* (non-Javadoc)
@@ -90,7 +90,8 @@ public class RemplissageFiller extends AbstractTransformer {
 					//BoundaryFill
 					else{
 						//boundaryFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
-						boundaryFillRecursive(ptTransformed); //Mode Recursive
+						//boundaryFillRecursive(ptTransformed); //Mode Recursive
+						boundaryFillRecursive3(ptTransformed);
 					}
 					//horizontalLineFill(ptTransformed);
 					
@@ -208,6 +209,25 @@ public class RemplissageFiller extends AbstractTransformer {
     			boundaryFillRecursive(new Point(x+1, y));
     			boundaryFillRecursive(new Point(x, y-1));
     			boundaryFillRecursive(new Point(x, y+1));
+    			
+    		}
+        }
+	}
+	
+	private void boundaryFillRecursive3(Point pointRecu) {
+		int x = pointRecu.x;
+        int y = pointRecu.y;
+        
+        if(positionValide(x,y) ){
+	         
+            if(!currentImage.getPixel(x,y).equals(borderColor) &&!thresholdValide(currentImage.getPixel(x,y)) && !currentImage.getPixel(x,y).equals(fillColor)){
+    			
+    			currentImage.setPixel(x, y, fillColor);
+    			
+    			boundaryFillRecursive3(new Point(x-1, y));
+    			boundaryFillRecursive3(new Point(x+1, y));
+    			boundaryFillRecursive3(new Point(x, y-1));
+    			boundaryFillRecursive3(new Point(x, y+1));
     			
     		}
         }
@@ -352,17 +372,19 @@ public class RemplissageFiller extends AbstractTransformer {
 	}
 	
 	public Boolean thresholdValide(Pixel pixel ){
-		
+		ConversionRGBversHSV convertisseur = new ConversionRGBversHSV();
 		double[] HSVBorderColor = convertisseur.RGBversHSV(borderColor.getRed(), borderColor.getGreen(), borderColor.getBlue());
-		double[] HSVPixelRecu = convertisseur.RGBversHSV(pixel.getRed(), pixel.getGreen(), pixel.getBlue());
 		
+		double[] HSVPixelRecu = convertisseur.RGBversHSV(pixel.getRed(), pixel.getGreen(), pixel.getBlue());
+		System.out.println("CalculHbas"+ (HSVBorderColor[0] - getHueThreshold()));
+		System.out.println("CalculHHaut"+(HSVBorderColor[0] + getHueThreshold()));
 		double HBas = calculValeurH(HSVBorderColor[0] - getHueThreshold());
 		double HHaut = calculValeurH(HSVBorderColor[0] + getHueThreshold());
 		double SBas = calculValeurS((HSVBorderColor[1]*255) - getSaturationThreshold());
 		double SHaut = calculValeurS((HSVBorderColor[1]*255) + getSaturationThreshold());
 		double VBas = calculValeurV((HSVBorderColor[2]*255) - getValueThreshold());
 		double VHaut = calculValeurV((HSVBorderColor[2]*255) + getValueThreshold());
-			
+		System.out.println("Hbas "+HBas+" HPixel "+HSVPixelRecu[0]+" HHaut "+HHaut);
 		if(		HBas <= HSVPixelRecu[0] &&  HSVPixelRecu[0] <= HHaut &&
 				SBas <= (HSVPixelRecu[1]*255) &&  (HSVPixelRecu[1]*255) <= SHaut &&	
 				VBas <= (HSVPixelRecu[2]*255) &&  (HSVPixelRecu[2]*255) <= VHaut ){
