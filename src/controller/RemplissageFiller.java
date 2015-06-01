@@ -40,8 +40,7 @@ public class RemplissageFiller extends AbstractTransformer {
 	private int hueThreshold = 1;
 	private int saturationThreshold = 2;
 	private int valueThreshold = 3;
-	private int xBase;
-	private int yBase;
+
 	/**
 	 * Creates an ImageLineFiller with default parameters.
 	 * Default pixel change color is black.
@@ -80,13 +79,13 @@ public class RemplissageFiller extends AbstractTransformer {
 					
 					//FloodFill
 					if(floodFill){
-						floodFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
-						//floodFillRecursive(ptTransformed); //Mode Recursive
+						//floodFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
+						floodFillRecursive(ptTransformed); //Mode Recursive
 					}
 					//BoundaryFill
 					else{
-						boundaryFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
-						//boundaryFillRecursive(ptTransformed); //Mode Recursive
+						//boundaryFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
+						boundaryFillRecursive(ptTransformed); //Mode Recursive
 					}
 					//horizontalLineFill(ptTransformed);
 					
@@ -193,9 +192,12 @@ public class RemplissageFiller extends AbstractTransformer {
 	private void boundaryFillRecursive(Point pointRecu) {
 		int x = pointRecu.x;
         int y = pointRecu.y;
-        if(positionValide(x,y)){
-    		if(!currentImage.getPixel(x, y).equals(fillColor) && !currentImage.getPixel(x, y).equals(borderColor)){
-    			currentImage.setPixel(pointRecu.x, pointRecu.y, fillColor);
+        
+        if(positionValide(x,y) ){
+	         
+            if(!currentImage.getPixel(x, y).equals(borderColor)&& !currentImage.getPixel(x,y).equals(fillColor)){
+    			
+    			currentImage.setPixel(x, y, fillColor);
     			
     			boundaryFillRecursive(new Point(x-1, y));
     			boundaryFillRecursive(new Point(x+1, y));
