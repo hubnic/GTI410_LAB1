@@ -220,8 +220,9 @@ public class RemplissageFiller extends AbstractTransformer {
         
         if(positionValide(x,y) ){
 	         
-            if(!currentImage.getPixel(x,y).equals(borderColor) &&!thresholdValide(currentImage.getPixel(x,y)) && !currentImage.getPixel(x,y).equals(fillColor)){
+            if(!thresholdValide(currentImage.getPixel(x,y)) && !currentImage.getPixel(x,y).equals(fillColor)){
     			
+            	//System.out.println("X " + x);
     			currentImage.setPixel(x, y, fillColor);
     			
     			boundaryFillRecursive3(new Point(x-1, y));
@@ -385,6 +386,8 @@ public class RemplissageFiller extends AbstractTransformer {
 		double VBas = calculValeurV((HSVBorderColor[2]*255) - getValueThreshold());
 		double VHaut = calculValeurV((HSVBorderColor[2]*255) + getValueThreshold());
 		System.out.println("Hbas "+HBas+" HPixel "+HSVPixelRecu[0]+" HHaut "+HHaut);
+		System.out.println("Sbas "+SBas+" SPixel "+HSVPixelRecu[1]*255+" SHaut "+SHaut);
+		System.out.println("Vbas "+VBas+" VPixel "+HSVPixelRecu[2]*255+" VHaut "+VHaut);
 		if(		HBas <= HSVPixelRecu[0] &&  HSVPixelRecu[0] <= HHaut &&
 				SBas <= (HSVPixelRecu[1]*255) &&  (HSVPixelRecu[1]*255) <= SHaut &&	
 				VBas <= (HSVPixelRecu[2]*255) &&  (HSVPixelRecu[2]*255) <= VHaut ){

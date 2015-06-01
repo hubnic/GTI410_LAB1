@@ -46,7 +46,7 @@ public class SliderMediator implements ChangeListener
 	{
 		
 		this.hSlider = hSlider;
-		this.hSlider.setMaximum(360);
+		//this.hSlider.setMaximum(360);
 		this.hLabel = hLabel;
 		this.sSlider = sSlider;
 		this.sLabel = sLabel;
