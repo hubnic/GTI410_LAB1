@@ -41,12 +41,15 @@ public class RemplissageFiller extends AbstractTransformer {
 	private int hueThreshold = 1;
 	private int saturationThreshold = 2;
 	private int valueThreshold = 3;
+	private ConversionRGBversHSV convertisseur;
 
 	/**
 	 * Creates an ImageLineFiller with default parameters.
 	 * Default pixel change color is black.
 	 */
 	public RemplissageFiller() {
+		
+		ConversionRGBversHSV convertisseur = new ConversionRGBversHSV();
 	}
 	
 	/* (non-Javadoc)
@@ -322,6 +325,50 @@ public class RemplissageFiller extends AbstractTransformer {
 			//System.out.println("Point Refuse" + " X "+pointX +" Y "+pointY);
 			return false;
 		}
+	}
+	
+	public double calculValeurH(double H){
+		
+		
+		if(H-getHueThreshold() < 0  ){return 0;}
+		else if(H+getHueThreshold() > 360){return 360;}
+		else return H;
+	}
+	
+	public double calculValeurS(double S){
+		
+		if(S-getSaturationThreshold() < 0  ){return 0;}
+		else if(S+getSaturationThreshold() > 255){return 255;}
+		else return S;
+		
+	}
+	
+	public double calculValeurV(double V){
+		
+		if(V-getValueThreshold() < 0  ){return 0;}
+		else if(V+getValueThreshold() > 255){return 255;}
+		else return V;
+		
+	}
+	
+	public Boolean thresholdValide(Pixel pixel ){
+		
+		double[] HSVBorderColor = convertisseur.RGBversHSV(borderColor.getRed(), borderColor.getGreen(), borderColor.getBlue());
+		double[] HSVPixelRecu = convertisseur.RGBversHSV(pixel.getRed(), pixel.getGreen(), pixel.getBlue());
+		
+		double HBas = calculValeurH(HSVBorderColor[0] - getHueThreshold());
+		double HHaut = calculValeurH(HSVBorderColor[0] + getHueThreshold());
+		double SBas = calculValeurS((HSVBorderColor[1]*255) - getSaturationThreshold());
+		double SHaut = calculValeurS((HSVBorderColor[1]*255) + getSaturationThreshold());
+		double VBas = calculValeurV((HSVBorderColor[2]*255) - getValueThreshold());
+		double VHaut = calculValeurV((HSVBorderColor[2]*255) + getValueThreshold());
+			
+		if(		HBas <= HSVPixelRecu[0] &&  HSVPixelRecu[0] <= HHaut &&
+				SBas <= (HSVPixelRecu[1]*255) &&  (HSVPixelRecu[1]*255) <= SHaut &&	
+				VBas <= (HSVPixelRecu[2]*255) &&  (HSVPixelRecu[2]*255) <= VHaut ){
+			return true;
+		}
+		else{return false;}
 	}
 	
 	
