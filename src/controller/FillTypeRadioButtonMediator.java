@@ -46,7 +46,7 @@ public class FillTypeRadioButtonMediator implements ActionListener{
 	/**
 	 * 
 	 */
-	private ImageLineFiller filler;
+	private RemplissageFiller filler;
 	
 	/**
 	 * 
@@ -54,7 +54,7 @@ public class FillTypeRadioButtonMediator implements ActionListener{
 	 * @param rbFloodFill
 	 * @param filler
 	 */
-	public FillTypeRadioButtonMediator(JRadioButton rbBoundaryFill, JRadioButton rbFloodFill, ImageLineFiller filler) {
+	public FillTypeRadioButtonMediator(JRadioButton rbBoundaryFill, JRadioButton rbFloodFill, RemplissageFiller filler) {
 		this.rbBoundaryFill = rbBoundaryFill;
 		this.rbFloodFill 	= rbFloodFill;
 		this.filler 		= filler;

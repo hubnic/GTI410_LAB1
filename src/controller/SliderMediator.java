@@ -37,12 +37,12 @@ public class SliderMediator implements ChangeListener
 	private JSlider sSlider;
 	private JLabel vLabel;
 	private JSlider vSlider;
-	private ImageLineFiller filler;
+	private RemplissageFiller filler;
 	
 	public SliderMediator(JSlider hSlider, JLabel hLabel,
 						  JSlider sSlider, JLabel sLabel,
 						  JSlider vSlider, JLabel vLabel,
-						  ImageLineFiller filler) 
+						  RemplissageFiller filler) 
 	{
 		this.hSlider = hSlider;
 		this.hLabel = hLabel;

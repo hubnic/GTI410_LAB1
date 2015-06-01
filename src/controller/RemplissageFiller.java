@@ -30,7 +30,7 @@ import java.util.Stack;
  * @author unascribed
  * @version $Revision: 1.12 $
  */
-public class ImageLineFiller extends AbstractTransformer {
+public class RemplissageFiller extends AbstractTransformer {
 	private ImageX currentImage;
 	private int currentImageWidth;		//Largeur de l image
 	private int currentImageHeight;  //Hauteur de l image
@@ -46,7 +46,7 @@ public class ImageLineFiller extends AbstractTransformer {
 	 * Creates an ImageLineFiller with default parameters.
 	 * Default pixel change color is black.
 	 */
-	public ImageLineFiller() {
+	public RemplissageFiller() {
 	}
 	
 	/* (non-Javadoc)
@@ -80,13 +80,13 @@ public class ImageLineFiller extends AbstractTransformer {
 					
 					//FloodFill
 					if(floodFill){
-						//floodFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
-						floodFillRecursive(ptTransformed); //Mode Recursive
+						floodFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
+						//floodFillRecursive(ptTransformed); //Mode Recursive
 					}
 					//BoundaryFill
 					else{
-						//boundaryFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
-						boundaryFillRecursive(ptTransformed); //Mode Recursive
+						boundaryFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
+						//boundaryFillRecursive(ptTransformed); //Mode Recursive
 					}
 					//horizontalLineFill(ptTransformed);
 					
@@ -177,9 +177,9 @@ public class ImageLineFiller extends AbstractTransformer {
 	               int x = pointRecupere.x;
 	               int y = pointRecupere.y;
 
-	            if(positionValide(x,y)){
+	            if(positionValide(x,y) && !currentImage.getPixel(x,y).equals(fillColor)){
 	            	         
-		            if(!currentImage.getPixel(x, y).equals(borderColor) && !currentImage.getPixel(x,y).equals(fillColor)){
+		            if(!currentImage.getPixel(x, y).equals(borderColor)){
 		                
 		            	currentImage.setPixel(x, y, fillColor);
 		            	pilePoint.push(new Point(x+1, y));

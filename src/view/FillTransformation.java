@@ -27,7 +27,7 @@ import javax.swing.JSlider;
 
 import controller.FillColorsMediator;
 import controller.FillTypeRadioButtonMediator;
-import controller.ImageLineFiller;
+import controller.RemplissageFiller;
 import controller.SliderMediator;
 
 /**
@@ -61,7 +61,7 @@ public class FillTransformation extends JPanel {
 	private JButton bFillColor;
 	private JButton bBoundaryColor;
 
-	public FillTransformation(ImageLineFiller filler){
+	public FillTransformation(RemplissageFiller filler){
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 			
 		JPanel slidersPanel = new JPanel();
