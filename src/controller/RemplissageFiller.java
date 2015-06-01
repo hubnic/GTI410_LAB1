@@ -36,6 +36,7 @@ public class RemplissageFiller extends AbstractTransformer {
 	private int currentImageHeight;  //Hauteur de l image
 	private Pixel fillColor = new Pixel(0xFF00FFFF);
 	private Pixel borderColor = new Pixel(0xFFFFFF00);
+	private Pixel couleurBase = new Pixel(0xFFFFFF00);
 	private boolean floodFill = true;
 	private int hueThreshold = 1;
 	private int saturationThreshold = 2;
@@ -79,6 +80,7 @@ public class RemplissageFiller extends AbstractTransformer {
 					
 					//FloodFill
 					if(floodFill){
+						couleurBase = currentImage.getPixel(ptTransformed.x, ptTransformed.y);
 						//floodFillStack(ptTransformed); //Méthode base sur HorizontalLineFill
 						floodFillRecursive(ptTransformed); //Mode Recursive
 					}
@@ -136,7 +138,7 @@ public class RemplissageFiller extends AbstractTransformer {
 
             if(positionValide(x,y)){
             	         
-	            if(currentImage.getPixel(x,y).equals(borderColor)){
+	            if(currentImage.getPixel(x,y).equals(couleurBase)){
 	                
 	            	currentImage.setPixel(x, y, fillColor);
 	            	pilePoint.push(new Point(x+1, y));
@@ -151,7 +153,7 @@ public class RemplissageFiller extends AbstractTransformer {
 		int x = pointRecu.x;
         int y = pointRecu.y;
         if(positionValide(x,y)){
-    		if(currentImage.getPixel(x, y).equals(borderColor)){
+    		if(currentImage.getPixel(x, y).equals(couleurBase)){
     			currentImage.setPixel(x, y, fillColor);
     			
     			floodFillRecursive(new Point(x-1, y));

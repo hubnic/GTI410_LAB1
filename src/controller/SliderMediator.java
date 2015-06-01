@@ -44,7 +44,9 @@ public class SliderMediator implements ChangeListener
 						  JSlider vSlider, JLabel vLabel,
 						  RemplissageFiller filler) 
 	{
+		
 		this.hSlider = hSlider;
+		this.hSlider.setMaximum(360);
 		this.hLabel = hLabel;
 		this.sSlider = sSlider;
 		this.sLabel = sLabel;
