@@ -220,10 +220,11 @@ public class RemplissageFiller extends AbstractTransformer {
         
         if(positionValide(x,y) ){
 	         
-            if(!thresholdValide(currentImage.getPixel(x,y)) && !currentImage.getPixel(x,y).equals(fillColor)){
+            if(!currentImage.getPixel(x,y).equals(borderColor) && !thresholdValide(currentImage.getPixel(x,y)) && !currentImage.getPixel(x,y).equals(fillColor)){
     			
-            	//System.out.println("X " + x);
+            	currentImage.beginPixelUpdate();
     			currentImage.setPixel(x, y, fillColor);
+    			currentImage.endPixelUpdate();
     			
     			boundaryFillRecursive3(new Point(x-1, y));
     			boundaryFillRecursive3(new Point(x+1, y));
