@@ -220,7 +220,7 @@ public class RemplissageFiller extends AbstractTransformer {
         
         if(positionValide(x,y) ){
 	         
-            if(!currentImage.getPixel(x,y).equals(borderColor) && !thresholdValide(currentImage.getPixel(x,y)) && !currentImage.getPixel(x,y).equals(fillColor)){
+            if(!thresholdValide(currentImage.getPixel(x,y)) && !currentImage.getPixel(x,y).equals(fillColor)){
     			
             	currentImage.beginPixelUpdate();
     			currentImage.setPixel(x, y, fillColor);
