@@ -22,7 +22,7 @@ import model.ImageX;
 import model.Shape;
 
 /**
- * 
+ * C'est cette classe qui attribut le filtre selon selection graphique
  * <p>Title: FilteringTransformer</p>
  * <p>Description: ... (AbstractTransformer)</p>
  * <p>Copyright: Copyright (c) 2004 Sébastien Bois, Eric Paquette</p>
@@ -32,8 +32,13 @@ import model.Shape;
  */
 public class FilteringTransformer extends AbstractTransformer{
 	Filter filter = new MeanFilter3x3(new PaddingZeroStrategy(), new ImageClampStrategy());
-	
+	Filter filtreMoyen = new FiltreMoyen(new PaddingZeroStrategy(), new ImageClampStrategy());
+	Filter filtreGaussien = new FiltreGaussien(new PaddingZeroStrategy(), new ImageClampStrategy());
+	Filter filtreSobel = new FiltreSobel(new PaddingZeroStrategy(), new ImageClampStrategy());
+	Filter filtreLaplacien = new FiltreLaplacien(new PaddingZeroStrategy(), new ImageClampStrategy());
+
 	/**
+	 * Affiche les valeurs de la matrice graphique
 	 * @param _coordinates
 	 * @param _value
 	 */
@@ -41,10 +46,11 @@ public class FilteringTransformer extends AbstractTransformer{
 		System.out.println("[" + (_coordinates.getColumn() - 1) + "]["
                                    + (_coordinates.getRow() - 1) + "] = " 
                                    + _value);
+		System.out.println("k");
 	}
 		
 	/**
-	 * 
+	 * Evenement après un click de la souris
 	 * @param e
 	 * @return
 	 */
