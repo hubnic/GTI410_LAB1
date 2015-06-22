@@ -31,12 +31,17 @@ import model.Shape;
  * @version $Revision: 1.6 $
  */
 public class FilteringTransformer extends AbstractTransformer{
+	
 	Filter filter = new MeanFilter3x3(new PaddingZeroStrategy(), new ImageClampStrategy());
+	
+	// IL FAUT MODIFIER LE PADDING ZERO STREATEGY
 	Filter filtreMoyen = new FiltreMoyen(new PaddingZeroStrategy(), new ImageClampStrategy());
 	Filter filtreGaussien = new FiltreGaussien(new PaddingZeroStrategy(), new ImageClampStrategy());
 	Filter filtreSobel = new FiltreSobel(new PaddingZeroStrategy(), new ImageClampStrategy());
 	Filter filtreLaplacien = new FiltreLaplacien(new PaddingZeroStrategy(), new ImageClampStrategy());
 
+	boolean mirror = false;
+	float sigmaGaussien;
 	/**
 	 * Affiche les valeurs de la matrice graphique
 	 * @param _coordinates
@@ -60,8 +65,41 @@ public class FilteringTransformer extends AbstractTransformer{
 			Shape shape = (Shape)intersectedObjects.get(0);			
 			if (shape instanceof ImageX) {				
 				ImageX currentImage = (ImageX)shape;
+				
+			//AJOUT
+				if (mirror){
+					System.out.println("Le traitement se fait en Miror");
+					BorderReflexion mirrorBorder= new BorderReflexion();
+					ImageX currentImageMiror = mirrorBorder.Reflexion(currentImage);
+					System.out.println("Taille de ImageMiror "+ currentImageMiror.getImageWidth() +" "+currentImageMiror.getImageHeight());
+					System.out.println("Taille de Image "+ currentImage.getImageWidth() +" "+currentImage.getImageHeight());
+				}
+				
+				//Agir selon les filtres
+				switch (getID()) {
+				 case 0:
+					 System.out.println("0");
+                 break;
+				 case 1:
+					 System.out.println("1");
+                 break;
+				 case 2:
+					 System.out.println("2");
+	                 break;
+				 case 3: 
+					 System.out.println("3");
+	                 break;
+				 case 4: 
+					 System.out.println("4");
+	                 break;
+				}
+				//FIN AJOUT
+				//MODIFICATION
 				ImageDouble filteredImage = filter.filterToImageDouble(currentImage);
 				ImageX filteredDisplayableImage = filter.getImageConversionStrategy().convert(filteredImage);
+				//FIN DE MODIFICATION4
+				
+				
 				currentImage.beginPixelUpdate();
 				
 				for (int i = 0; i < currentImage.getImageWidth(); ++i) {
@@ -85,6 +123,8 @@ public class FilteringTransformer extends AbstractTransformer{
 	 */
 	public void setBorder(String string) {
 		System.out.println(string);
+		mirror = true;
+		
 	}
 
 	/**
@@ -93,4 +133,10 @@ public class FilteringTransformer extends AbstractTransformer{
 	public void setClamp(String string) {
 		System.out.println(string);
 	}
+	
+	public void setSigmaGaussien (String object) {
+		System.out.println("Set valeur Sigma" + object);
+
+	}
+	
 }

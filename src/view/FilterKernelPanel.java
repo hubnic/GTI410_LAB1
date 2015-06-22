@@ -23,6 +23,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import model.KernelModel;
@@ -69,24 +70,34 @@ public class FilterKernelPanel extends JPanel implements ObserverIF {
 	/**
 	 * 
 	 */
+	private JPanel _setDownPanel;
 	private JComboBox _filterTypeComboBox;
 	/**
 	 * 
 	 */
 	private TransformersIndex ti;
+	//Graphic Gaussien
+	private JLabel _ParamGaussien;
+	private JComboBox _GaussienComboBox;
+	//Graphic Moyenne
+	private JLabel _ParamMoyen;
+	private  JTextField _ValueMoyen;
+
 	
 	public FilterKernelPanel(TransformersIndex ti){
 		_setUpPanel  = new JPanel();
-		 
+		_setDownPanel  = new JPanel();
 		 this.ti = ti;
 		 
 		_setUpPanel.setLayout(new GridLayout(3, 2));
-
+		_setDownPanel.setLayout(new GridLayout(3, 2));
+		
 		_kernelPanel = new KernelPanel(ti);
 		_kernelPanel.addObserver(this);
 		
 		_handlingBorderLabel	= new JLabel("Handling Border"); 
-		_handlingBorderComboBox	= new JComboBox(KernelModel.HANDLING_BORDER_ARRAY);	
+		_handlingBorderComboBox	= new JComboBox(KernelModel.HANDLING_BORDER_ARRAY);
+		
 			
 		_rangeClampLabel = new JLabel("Range");
 		_clampComboBox   = new JComboBox(KernelModel.CLAMP_ARRAY);
@@ -103,7 +114,12 @@ public class FilterKernelPanel extends JPanel implements ObserverIF {
 		//_model.setClampValue((String)_clampComboBox.getSelectedItem());
 		
 		_filterTypeComboBox.setSelectedIndex(0);
-			
+		_ParamMoyen    = new JLabel("Parametre Moyen");	
+		_ValueMoyen = new JTextField();
+		_ParamGaussien    = new JLabel("Parametre gaussien");
+		_GaussienComboBox = new JComboBox(KernelModel.GAUSSIEN_VALUE_SIGMA);
+		
+		//BORDURE BOX
 		_handlingBorderComboBox.addActionListener(
 			new ActionListener(){
 				public void actionPerformed(ActionEvent ae) {
@@ -118,12 +134,21 @@ public class FilterKernelPanel extends JPanel implements ObserverIF {
 				}	
 			});
 		
+		//FILTRE BOX
 		_filterTypeComboBox.addActionListener(
 			new ActionListener(){
 				public void actionPerformed(ActionEvent ae) {
 					setFilter((String)_filterTypeComboBox.getSelectedItem());
+					System.out.println(_filterTypeComboBox.getSelectedItem());
 				}	
 			});
+		//GAUSSIEN BOX
+		_GaussienComboBox.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent ae) {
+						FilterKernelPanel.this.ti.getTheFilter().setSigmaGaussien((String) _GaussienComboBox.getSelectedItem());
+					}	
+				});
 		
 		_handlingBorderLabel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		_rangeClampLabel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
@@ -136,10 +161,16 @@ public class FilterKernelPanel extends JPanel implements ObserverIF {
 		_setUpPanel.add(_filterTypeLabel);
 		_setUpPanel.add(_filterTypeComboBox);
 		
+		_setDownPanel.add(_ParamMoyen);
+		_setDownPanel.add(_ValueMoyen);
+		_setDownPanel.add(_ParamGaussien);
+		_setDownPanel.add(_GaussienComboBox);
+		
 		//
 		setLayout(new BorderLayout());
 		add(_setUpPanel, BorderLayout.NORTH);
 		add(_kernelPanel, BorderLayout.CENTER);
+		add(_setDownPanel, BorderLayout.SOUTH);
 	}
 	
 	/* (non-Javadoc)
