@@ -32,26 +32,32 @@ import model.Shape;
  */
 public class FilteringTransformer extends AbstractTransformer{
 	
-	Filter filter = new MeanFilter3x3(new PaddingZeroStrategy(), new ImageClampStrategy());
+	private double filterMatrix[][] = null;
+	PaddingStrategy paddingStrategie;
+	ImageClampStrategy imageClampStrategie;
+	double sigmaGaussien;
 	
-	// IL FAUT MODIFIER LE PADDING ZERO STREATEGY
-	Filter filtreMoyen = new FiltreMoyen(new PaddingZeroStrategy(), new ImageClampStrategy());
-	Filter filtreGaussien = new FiltreGaussien(new PaddingZeroStrategy(), new ImageClampStrategy());
-	Filter filtreSobel = new FiltreSobel(new PaddingZeroStrategy(), new ImageClampStrategy());
-	Filter filtreLaplacien = new FiltreLaplacien(new PaddingZeroStrategy(), new ImageClampStrategy());
+	//Filter filter = new MeanFilter3x3(paddingStrategie, imageClampStrategie);
+	
+	//Ce filtre dispose de tout les paramètres (Padding, clamp, la gestion des filtres doit se faire soit dans FILTER ou GestionnaireFiltre
+	//On renvoie seulement l'image traitee
+	Filter filter = new GestionnaireFiltre(new PaddingZeroStrategy(), new ImageClampStrategy());
 
 	boolean mirror = false;
-	float sigmaGaussien;
 	/**
 	 * Affiche les valeurs de la matrice graphique
 	 * @param _coordinates
 	 * @param _value
 	 */
 	public void updateKernel(Coordinates _coordinates, float _value) {
+		filterMatrix = new double [3][3];
 		System.out.println("[" + (_coordinates.getColumn() - 1) + "]["
                                    + (_coordinates.getRow() - 1) + "] = " 
                                    + _value);
+		filterMatrix[_coordinates.getColumn() - 1][_coordinates.getRow() - 1]= _value;
+		System.out.println((_coordinates.getColumn() - 1) +" "+(_coordinates.getRow() - 1 )+" "+ _value);
 		System.out.println("k");
+		
 	}
 		
 	/**
@@ -66,40 +72,12 @@ public class FilteringTransformer extends AbstractTransformer{
 			if (shape instanceof ImageX) {				
 				ImageX currentImage = (ImageX)shape;
 				
-			//AJOUT
-				if (mirror){
-					System.out.println("Le traitement se fait en Miror");
-					BorderReflexion mirrorBorder= new BorderReflexion();
-					ImageX currentImageMiror = mirrorBorder.Reflexion(currentImage);
-					System.out.println("Taille de ImageMiror "+ currentImageMiror.getImageWidth() +" "+currentImageMiror.getImageHeight());
-					System.out.println("Taille de Image "+ currentImage.getImageWidth() +" "+currentImage.getImageHeight());
-				}
-				
-				//Agir selon les filtres
-				switch (getID()) {
-				 case 0:
-					 System.out.println("0");
-                 break;
-				 case 1:
-					 System.out.println("1");
-                 break;
-				 case 2:
-					 System.out.println("2");
-	                 break;
-				 case 3: 
-					 System.out.println("3");
-	                 break;
-				 case 4: 
-					 System.out.println("4");
-	                 break;
-				}
-				//FIN AJOUT
-				//MODIFICATION
+				//Debut traitement de l'image après le clic
 				ImageDouble filteredImage = filter.filterToImageDouble(currentImage);
 				ImageX filteredDisplayableImage = filter.getImageConversionStrategy().convert(filteredImage);
-				//FIN DE MODIFICATION4
+				//FIN DE traitement
 				
-				
+				//Debut du reaffichage de l image
 				currentImage.beginPixelUpdate();
 				
 				for (int i = 0; i < currentImage.getImageWidth(); ++i) {
@@ -108,6 +86,8 @@ public class FilteringTransformer extends AbstractTransformer{
 					}
 				}
 				currentImage.endPixelUpdate();
+				
+				//Fin update image
 			}
 		}
 		return false;
@@ -119,24 +99,49 @@ public class FilteringTransformer extends AbstractTransformer{
 	public int getID() { return ID_FILTER; }
 
 	/**
+	 * Procedure qui permet d'ajuster le type de gestion des bordures
+	 * selon la selection a l ecran
+	 * Si typeBorder est != de Mirror on applique PaddingZeroStrategy
+	 * Sinon on applique PaddingMirror
 	 * @param string
 	 */
-	public void setBorder(String string) {
-		System.out.println(string);
-		mirror = true;
-		
+	public void setBorder(String typeBorder) {
+		System.out.println(typeBorder);
+		if(!typeBorder.equals("Mirror")){
+			filter.setPaddingStrategy(new PaddingZeroStrategy());
+		}
+		else{
+			filter.setPaddingStrategy(new PaddingMiror());
+		}		
 	}
 
 	/**
 	 * @param string
 	 */
-	public void setClamp(String string) {
-		System.out.println(string);
+	public void setClamp(String clampStrategy) {
+		System.out.println(clampStrategy);
+		if(clampStrategy.equals("Abs and normalize to 255")){
+			//filter.setImageConversionStrategy(conversionStrategy);
+		}
+		else if(clampStrategy.equals("Abs and normalize 0 to 255")){
+			//filter.setImageConversionStrategy(conversionStrategy);
+		}
+		else if(clampStrategy.equals("Normalize 0 to 255")){
+			//filter.setImageConversionStrategy(conversionStrategy);
+		}
+		else{
+			//Clamp 0...255
+			filter.setImageConversionStrategy(new ImageClampStrategy());
+		}
 	}
 	
-	public void setSigmaGaussien (String object) {
-		System.out.println("Set valeur Sigma" + object);
-
+	public void setSigmaGaussien (String sigmaRecu) {
+		System.out.println("Set valeur Sigma" + sigmaRecu);
+		//Affect Sigma à super Filter
+		filter.setSigmaGaussien(new Double(sigmaRecu));
+		
 	}
+	
+	
 	
 }

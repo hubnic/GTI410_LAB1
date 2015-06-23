@@ -27,7 +27,8 @@ import model.*;
 public class Filter {
 	protected PaddingStrategy paddingStrategy;
 	protected ImageConversionStrategy conversionStrategy;
-
+	double sigma;
+	
 	public Filter(PaddingStrategy paddingStrategy, ImageConversionStrategy conversionStrategy) {
 		setPaddingStrategy(paddingStrategy);
 		setImageConversionStrategy(conversionStrategy);
@@ -65,4 +66,7 @@ public class Filter {
 		return conversionStrategy;
 	}
 	
+	public void setSigmaGaussien(double sigmaRecu) {
+		this.sigma = sigmaRecu;
+	}
 }
