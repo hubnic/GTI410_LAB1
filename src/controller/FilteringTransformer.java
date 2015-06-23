@@ -45,7 +45,8 @@ public class FilteringTransformer extends AbstractTransformer{
 
 	boolean mirror = false;
 	/**
-	 * Affiche les valeurs de la matrice graphique
+	 * Affiche et recupere les valeurs de la matrice graphique
+	 * les valeurs sont affectees a filterMatrix
 	 * @param _coordinates
 	 * @param _value
 	 */
@@ -102,7 +103,8 @@ public class FilteringTransformer extends AbstractTransformer{
 	 * Procedure qui permet d'ajuster le type de gestion des bordures
 	 * selon la selection a l ecran
 	 * Si typeBorder est != de Mirror on applique PaddingZeroStrategy
-	 * Sinon on applique PaddingMirror
+	 * Sinon on applique PaddingMirror 
+	 * (Liaison avec FilterKernelPanel)
 	 * @param string
 	 */
 	public void setBorder(String typeBorder) {
@@ -116,20 +118,25 @@ public class FilteringTransformer extends AbstractTransformer{
 	}
 
 	/**
+	 * Permet d'affecter l image clamp strategy selon la selection faite sur le 
+	 * panneau graphique (Liaison avec FilterKernelPanel)
 	 * @param string
 	 */
 	public void setClamp(String clampStrategy) {
 		System.out.println(clampStrategy);
 		if(clampStrategy.equals("Abs and normalize to 255")){
-			//filter.setImageConversionStrategy(conversionStrategy);
+			//Clamp Abs and normalize to 255
+			filter.setImageConversionStrategy(new ImageClampAbsNormalizeTo255());
 		}
 		else if(clampStrategy.equals("Abs and normalize 0 to 255")){
-			//filter.setImageConversionStrategy(conversionStrategy);
+			//Clamp Abs and normalize 0 to 255
+			filter.setImageConversionStrategy(new ImageClampAbsNormalize0To255());
 		}
 		else if(clampStrategy.equals("Normalize 0 to 255")){
-			//filter.setImageConversionStrategy(conversionStrategy);
+			//Clamp Normalize 0 to 255
+			filter.setImageConversionStrategy(new ImageClampNormalize0To255());
 		}
-		else{
+		else if(clampStrategy.equals("Clamp 0...255")){
 			//Clamp 0...255
 			filter.setImageConversionStrategy(new ImageClampStrategy());
 		}
