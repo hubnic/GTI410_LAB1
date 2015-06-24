@@ -2,10 +2,10 @@ package controller;
 
 import model.ImageDouble;
 import model.ImageX;
+import model.Pixel;
 import model.PixelDouble;
 
 public class ImageClampAbsNormalize0To255 extends ImageClampStrategy {
-
 	public ImageX convert(ImageDouble image) {
 		int imageWidth = image.getImageWidth();
 		int imageHeight = image.getImageHeight();
@@ -14,15 +14,18 @@ public class ImageClampAbsNormalize0To255 extends ImageClampStrategy {
 
 		newImage.beginPixelUpdate();
 		
-		
 		for (int x = 0; x < imageWidth; x++) {
 			for (int y = 0; y < imageHeight; y++) {
 				curPixelDouble = image.getPixel(x,y);
+				double ROUGE = curPixelDouble.getRed();
+				double VERT = curPixelDouble.getGreen();
+				double BLEU = curPixelDouble.getBlue();
+				double ALPHA = curPixelDouble.getAlpha();
 				
-				/**newImage.setPixel(x, y, new Pixel((int)(clamp0To255(curPixelDouble.getRed())),
-												  (int)(clamp0To255(curPixelDouble.getGreen())),
-												  (int)(clamp0To255(curPixelDouble.getBlue())),
-												  (int)(clamp0To255(curPixelDouble.getAlpha()))));**/
+				newImage.setPixel(x, y, new Pixel((int)(normalisation(ROUGE,ROUGE,VERT,BLEU)),
+												  (int)(normalisation(VERT,ROUGE,VERT,BLEU)),
+												  (int)(normalisation(BLEU,ROUGE,VERT,BLEU)),
+												  (int)(normalisation(ALPHA,ALPHA,ALPHA,ALPHA))));
 			}
 		}
 		
@@ -30,7 +33,11 @@ public class ImageClampAbsNormalize0To255 extends ImageClampStrategy {
 		newImage.endPixelUpdate();
 		return newImage;
 		
-		 
 	 }
+	double normalisation(double cone, double R,double V, double B){
+		double calcul;
+		calcul = Math.abs(cone);
+		return ((calcul/(R+V+B))*255);
+	}
 	
 }
