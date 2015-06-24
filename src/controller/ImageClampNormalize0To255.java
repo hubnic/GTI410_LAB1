@@ -22,13 +22,9 @@ public class ImageClampNormalize0To255 extends ImageClampStrategy{
 					double VERT = curPixelDouble.getGreen();
 					double BLEU = curPixelDouble.getBlue();
 					double ALPHA = curPixelDouble.getAlpha();
-					newImage.setPixel(x, y, new Pixel(normalisation(RED,RED,VERT,BLEU),
-							normalisation(VERT,RED,VERT,BLEU),
-							normalisation(BLEU,RED,VERT,BLEU));
 				}
+			
 			}
-			
-			
 			newImage.endPixelUpdate();
 			return newImage;
 
