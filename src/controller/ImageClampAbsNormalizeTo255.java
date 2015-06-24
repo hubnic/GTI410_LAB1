@@ -2,6 +2,7 @@ package controller;
 
 import model.ImageDouble;
 import model.ImageX;
+import model.Pixel;
 import model.PixelDouble;
 
 public class ImageClampAbsNormalizeTo255 extends ImageClampStrategy {
@@ -17,11 +18,15 @@ public class ImageClampAbsNormalizeTo255 extends ImageClampStrategy {
 		for (int x = 0; x < imageWidth; x++) {
 			for (int y = 0; y < imageHeight; y++) {
 				curPixelDouble = image.getPixel(x,y);
+				double RED = curPixelDouble.getRed();
+				double VERT = curPixelDouble.getGreen();
+				double BLEU = curPixelDouble.getBlue();
+				double ALPHA = curPixelDouble.getAlpha();
 				
-				/**newImage.setPixel(x, y, new Pixel((int)(clamp0To255(curPixelDouble.getRed())),
-												  (int)(clamp0To255(curPixelDouble.getGreen())),
-												  (int)(clamp0To255(curPixelDouble.getBlue())),
-												  (int)(clamp0To255(curPixelDouble.getAlpha()))));**/
+				newImage.setPixel(x, y, new Pixel((int)(normalisation(curPixelDouble.getRed())),
+												  (int)(normalisation(curPixelDouble.getGreen())),
+												  (int)(normalisation(curPixelDouble.getBlue())),
+												  (int)(normalisation(curPixelDouble.getAlpha()))));
 			}
 		}
 		
@@ -29,7 +34,11 @@ public class ImageClampAbsNormalizeTo255 extends ImageClampStrategy {
 		newImage.endPixelUpdate();
 		return newImage;
 		
-		 
 	 }
+	double normalisation(double cone){
+		double calcul;
+		calcul = Math.abs(cone);
+		return calcul;
+	}
 	
 }

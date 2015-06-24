@@ -22,7 +22,7 @@ import model.ImageX;
 import model.Shape;
 
 /**
- * C'est cette classe qui attribut le filtre selon selection graphique
+ * cette classe qui attribut le filtre selon selection graphique
  * <p>Title: FilteringTransformer</p>
  * <p>Description: ... (AbstractTransformer)</p>
  * <p>Copyright: Copyright (c) 2004 Sébastien Bois, Eric Paquette</p>
@@ -33,8 +33,6 @@ import model.Shape;
 public class FilteringTransformer extends AbstractTransformer{
 	
 	private double filterMatrix[][] = null;
-	PaddingStrategy paddingStrategie;
-	ImageClampStrategy imageClampStrategie;
 	double sigmaGaussien;
 	
 	//Filter filter = new MeanFilter3x3(paddingStrategie, imageClampStrategie);
@@ -43,7 +41,6 @@ public class FilteringTransformer extends AbstractTransformer{
 	//On renvoie seulement l'image traitee
 	Filter filter = new GestionnaireFiltre(new PaddingZeroStrategy(), new ImageClampStrategy());
 
-	boolean mirror = false;
 	/**
 	 * Affiche et recupere les valeurs de la matrice graphique
 	 * les valeurs sont affectees a filterMatrix

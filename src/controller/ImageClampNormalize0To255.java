@@ -18,11 +18,13 @@ public class ImageClampNormalize0To255 extends ImageClampStrategy{
 			for (int x = 0; x < imageWidth; x++) {
 				for (int y = 0; y < imageHeight; y++) {
 					curPixelDouble = image.getPixel(x,y);
-					
-					/**newImage.setPixel(x, y, new Pixel((int)(clamp0To255(curPixelDouble.getRed())),
-													  (int)(clamp0To255(curPixelDouble.getGreen())),
-													  (int)(clamp0To255(curPixelDouble.getBlue())),
-													  (int)(clamp0To255(curPixelDouble.getAlpha()))));**/
+					double RED = curPixelDouble.getRed();
+					double VERT = curPixelDouble.getGreen();
+					double BLEU = curPixelDouble.getBlue();
+					double ALPHA = curPixelDouble.getAlpha();
+					newImage.setPixel(x, y, new Pixel(normalisation(RED,RED,VERT,BLEU),
+							normalisation(VERT,RED,VERT,BLEU),
+							normalisation(BLEU,RED,VERT,BLEU));
 				}
 			}
 			
@@ -31,6 +33,10 @@ public class ImageClampNormalize0To255 extends ImageClampStrategy{
 			return newImage;
 
 		 
+	 }
+	 private double normalisation(double cone, double R, double V, double B){
+		 
+		return 0;
 	 }
 
 }
