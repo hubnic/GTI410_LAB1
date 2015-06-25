@@ -6,11 +6,10 @@ import model.PixelDouble;
 
 public class FiltreCustom extends Filter {
 
-	double [][] filterMatrix;
+	double [][] filterMatrix = new double[3][3];
 	public FiltreCustom(PaddingStrategy paddingStrategy,
 			ImageConversionStrategy conversionStrategy) {
 		super(paddingStrategy, conversionStrategy);
-		filterMatrix = new double[3][3];
 
 		filterMatrix= super.getMatrice();
 	

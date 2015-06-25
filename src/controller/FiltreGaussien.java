@@ -77,7 +77,7 @@ public class FiltreGaussien extends Filter {
 				for (int i = 0; i <= 2; i++) {
 					for (int j = 0; j <= 2; j++) {
 
-						System.out.println("filtre entree" + filterMatrix[i][j]);
+						//System.out.println("filtre entree" + filterMatrix[i][j]);
 						result += filterMatrix[i][j] * getPaddingStrategy().pixelAt(image,
 								x + (i - 1),
 								y + (j - 1)).getRed();

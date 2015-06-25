@@ -28,7 +28,7 @@ public class Filter {
 	protected PaddingStrategy paddingStrategy;
 	protected ImageConversionStrategy conversionStrategy;
 	double sigma;
-	private double filterMatrix[][] = null;
+	private double filterMatrix[][] = new double[3][3];
 	
 	public Filter(PaddingStrategy paddingStrategy, ImageConversionStrategy conversionStrategy) {
 		setPaddingStrategy(paddingStrategy);
@@ -71,10 +71,28 @@ public class Filter {
 		this.sigma = sigmaRecu;
 	}
 	public void setMatrice(double[][] filterRecu) {
-		this.filterMatrix=filterRecu;
+		filterMatrix[0][0]=filterRecu[0][0];
+		filterMatrix[0][1]=filterRecu[0][1];
+		filterMatrix[0][2]=filterRecu[0][2];
+		filterMatrix[1][0]=filterRecu[1][0];
+		filterMatrix[1][1]=filterRecu[1][1];
+		filterMatrix[1][2]=filterRecu[1][2];
+		filterMatrix[2][0]=filterRecu[2][0];
+		filterMatrix[2][1]=filterRecu[2][1];
+		filterMatrix[2][2]=filterRecu[2][2];
 	}
 	
 	public double[][] getMatrice() {
+		System.out.println("Je suis dans la Matrice FIlter");
+		System.out.println(filterMatrix[0][0]);
+		System.out.println(filterMatrix[0][1]);
+		System.out.println(filterMatrix[0][2]);
+		System.out.println(filterMatrix[1][0]);
+		System.out.println(filterMatrix[1][1]);
+		System.out.println(filterMatrix[1][2]);
+		System.out.println(filterMatrix[2][0]);
+		System.out.println(filterMatrix[2][1]);
+		System.out.println(filterMatrix[2][2]);
 		return this.filterMatrix;
 	}
 

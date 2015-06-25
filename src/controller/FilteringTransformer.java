@@ -38,8 +38,8 @@ public class FilteringTransformer extends AbstractTransformer{
 	//Ce filtre dispose de tout les paramètres (Padding, clamp, la gestion des filtres doit se faire soit dans FILTER ou GestionnaireFiltre
 	//On renvoie seulement l'image traitee
 	
-	Filter filter = new GestionnaireFiltre(new PaddingZeroStrategy(), new ImageClampStrategy());
-
+	//Filter filter = new GestionnaireFiltre(new PaddingZeroStrategy(), new ImageClampStrategy());
+	Filter filter = new FiltreCustom(new PaddingZeroStrategy(), new ImageClampStrategy());
 	/**
 	 * Affiche et recupere les valeurs de la matrice graphique
 	 * les valeurs sont affectees a filterMatrix
@@ -52,10 +52,19 @@ public class FilteringTransformer extends AbstractTransformer{
                                    + (_coordinates.getRow() - 1) + "] = " 
                                    + _value);
 		filterMatrix[_coordinates.getColumn() - 1][_coordinates.getRow() - 1]= _value;
-		System.out.println((_coordinates.getColumn() - 1) +" "+(_coordinates.getRow() - 1 )+" "+ _value);
-		System.out.println("k");
-		filter.setMatrice(filterMatrix);
-		
+		filter.setMatrice(this.filterMatrix);
+		//System.out.println((_coordinates.getColumn() - 1) +" "+(_coordinates.getRow() - 1 )+" "+ _value);
+		//System.out.println("k");
+		//filter.setMatrice(filterMatrix);
+		//System.out.println(filterMatrix[0][0]);
+		//System.out.println(filterMatrix[0][1]);
+		//System.out.println(filterMatrix[0][2]);
+		//System.out.println(filterMatrix[1][0]);
+		//System.out.println(filterMatrix[1][1]);
+		//System.out.println(filterMatrix[1][2]);
+		//System.out.println(filterMatrix[2][0]);
+		//System.out.println(filterMatrix[2][1]);
+		//System.out.println(filterMatrix[2][2]);
 	}
 		
 	/**
