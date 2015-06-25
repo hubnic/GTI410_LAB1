@@ -17,15 +17,15 @@ public class FiltreGaussien extends Filter {
 		super(paddingStrategy, conversionStrategy);
 		filterMatrix = new double[3][3];
 
-		filterMatrix[0][0] = 1/16;
-		filterMatrix[1][0] = 2/16;
-		filterMatrix[2][0] = 1/16;
-		filterMatrix[0][1] = 2/16;
-		filterMatrix[1][1] = 4/16;
-		filterMatrix[2][1] = 2/16;
-		filterMatrix[0][2] = 1/16;
-		filterMatrix[1][2] = 2/16;
-		filterMatrix[2][2] = 1/16;
+		filterMatrix[0][0] = 2.0/174.0;
+		filterMatrix[1][0] = 14.0/174.0;
+		filterMatrix[2][0] = 2.0/174.0;
+		filterMatrix[0][1] = 14.0/174.0;
+		filterMatrix[1][1] = 100.0/174.0;
+		filterMatrix[2][1] = 14.0/174.0;
+		filterMatrix[0][2] = 2.0/174.0;
+		filterMatrix[1][2] = 14.0/174.0;
+		filterMatrix[2][2] = 12.0/174.0;
 	}
 
 	/**
@@ -76,12 +76,13 @@ public class FiltreGaussien extends Filter {
 				// RED
 				for (int i = 0; i <= 2; i++) {
 					for (int j = 0; j <= 2; j++) {
+
+						System.out.println("filtre entree" + filterMatrix[i][j]);
 						result += filterMatrix[i][j] * getPaddingStrategy().pixelAt(image,
-								x+(i-1),
-								y+(j-1)).getRed();
+								x + (i - 1),
+								y + (j - 1)).getRed();
 					}
 				}
-
 				newPixel.setRed(result);
 				result = 0;
 
