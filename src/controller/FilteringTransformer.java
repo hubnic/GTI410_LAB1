@@ -36,10 +36,11 @@ public class FilteringTransformer extends AbstractTransformer{
 	double sigmaGaussien;
 	
 	//Filter filter = new MeanFilter3x3(paddingStrategie, imageClampStrategie);
-	
+	//Filter filter = new FiltreGaussien(new PaddingZeroStrategy(), new ImageClampStrategy());
+	Filter filter = new FiltreMedian(new PaddingZeroStrategy(), new ImageClampStrategy());
 	//Ce filtre dispose de tout les paramètres (Padding, clamp, la gestion des filtres doit se faire soit dans FILTER ou GestionnaireFiltre
 	//On renvoie seulement l'image traitee
-	Filter filter = new GestionnaireFiltre(new PaddingZeroStrategy(), new ImageClampStrategy());
+	//Filter filter = new GestionnaireFiltre(new PaddingZeroStrategy(), new ImageClampStrategy());
 
 	/**
 	 * Affiche et recupere les valeurs de la matrice graphique
@@ -106,11 +107,12 @@ public class FilteringTransformer extends AbstractTransformer{
 	 */
 	public void setBorder(String typeBorder) {
 		System.out.println(typeBorder);
-		if(!typeBorder.equals("Mirror")){
-			filter.setPaddingStrategy(new PaddingZeroStrategy());
-		}
-		else{
+		if(typeBorder.equals("Mirror")){
 			filter.setPaddingStrategy(new PaddingMiror());
+			
+		}
+		else if(!typeBorder.equals("Mirror")){
+			filter.setPaddingStrategy(new PaddingZeroStrategy());
 		}		
 	}
 
