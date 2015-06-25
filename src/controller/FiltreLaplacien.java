@@ -8,18 +8,26 @@ import model.PixelDouble;
 
 public class FiltreLaplacien extends Filter {
 	private double filterMatrix[][] = null;
+
 	private double filterArray[] = null;
+	
 
 	public FiltreLaplacien(PaddingStrategy paddingStrategy,
 			ImageConversionStrategy conversionStrategy) {
 		super(paddingStrategy, conversionStrategy);
 		// TODO Auto-generated constructor stub
-		filterArray = new double[9];
 		filterMatrix = new double[3][3];
-
-		filterMatrix[0][0] = filterMatrix[1][0] = filterMatrix[2][0] =
-				filterMatrix[0][1] = filterMatrix[1][1] = filterMatrix[2][1] =
-						filterMatrix[0][2] = filterMatrix[1][2] = filterMatrix[2][2] = (1.0);
+		filterMatrix[0][0]=0;
+		filterMatrix[0][1]=-1;
+		filterMatrix[0][2]=0;
+		filterMatrix[1][0]=-1;
+		filterMatrix[1][1]=4;
+		filterMatrix[1][2]=-1;
+		filterMatrix[2][0]=0;
+		filterMatrix[2][1]=-1;
+		filterMatrix[2][2]=0;
+		
+		filterArray = new double[9];
 	}
 
 
@@ -62,7 +70,6 @@ public class FiltreLaplacien extends Filter {
 		ImageDouble newImage = new ImageDouble(imageWidth, imageHeight);
 		PixelDouble newPixel = null;
 		double result = 0;
-		int filterArrayIt = 0;
 
 		for (int x = 0; x < imageWidth; x++) {
 			for (int y = 0; y < imageHeight; y++) {
@@ -72,49 +79,40 @@ public class FiltreLaplacien extends Filter {
 				// RED
 				for (int i = 0; i <= 2; i++) {
 					for (int j = 0; j <= 2; j++) {
-						filterArray[filterArrayIt]= getPaddingStrategy().pixelAt(image,
+						result += filterMatrix[i][j] * getPaddingStrategy().pixelAt(image,
 								x+(i-1),
 								y+(j-1)).getRed();
-						filterArrayIt++;
 					}
 				}
-				Arrays.sort(filterArray);
-				result = filterArray[filterArray.length/2];
+
 				newPixel.setRed(result);
 				result = 0;
-				filterArrayIt = 0;
 
 				//*******************************
 				// Green
 				for (int i = 0; i <= 2; i++) {
 					for (int j = 0; j <= 2; j++) {
-						filterArray[filterArrayIt]= getPaddingStrategy().pixelAt(image,
+						result += filterMatrix[i][j] * getPaddingStrategy().pixelAt(image,
 								x+(i-1),
 								y+(j-1)).getGreen();
-						filterArrayIt++;
 					}
 				}
-				Arrays.sort(filterArray);
-				result = filterArray[filterArray.length/2];
+
 				newPixel.setGreen(result);
 				result = 0;
-				filterArrayIt = 0;
 
 				//*******************************
 				// Blue
 				for (int i = 0; i <= 2; i++) {
 					for (int j = 0; j <= 2; j++) {
-						filterArray[filterArrayIt]= getPaddingStrategy().pixelAt(image,
+						result += filterMatrix[i][j] * getPaddingStrategy().pixelAt(image,
 								x+(i-1),
 								y+(j-1)).getBlue();
-						filterArrayIt++;
 					}
 				}
-				Arrays.sort(filterArray);
-				result = filterArray[filterArray.length/2];
+
 				newPixel.setBlue(result);
 				result = 0;
-				filterArrayIt = 0;
 
 				//*******************************
 				// Alpha - Untouched in this filter

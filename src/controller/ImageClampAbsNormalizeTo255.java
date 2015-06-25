@@ -45,7 +45,6 @@ public class ImageClampAbsNormalizeTo255 extends ImageClampStrategy {
 		int imageHeight = image.getImageHeight();
 		PixelDouble curPixelDouble = null;
 		double MIN = 255;
-
 		double MAX = 0;
 
 		for (int x = 0; x < imageWidth; x++) {
@@ -77,15 +76,16 @@ public class ImageClampAbsNormalizeTo255 extends ImageClampStrategy {
 		double[] tab = new double[2];
 		tab[0] = MIN;
 		tab[1] = MAX;
+		System.out.println("MIN :"+MIN +" "+"MAX :"+MAX);
 		return tab;
 
 	}
 
 	double normalisation(double cone) {
 		double calcul;
-		cone= ((cone-minMax[0])*minMax[1])/255;
-		calcul = Math.abs(cone);
-		return calcul;
+		cone= ((cone+Math.abs(minMax[0])*minMax[1]));
+		//calcul = Math.abs(cone);
+		return cone;
 	}
 
 }
