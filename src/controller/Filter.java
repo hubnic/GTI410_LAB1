@@ -28,6 +28,7 @@ public class Filter {
 	protected PaddingStrategy paddingStrategy;
 	protected ImageConversionStrategy conversionStrategy;
 	double sigma;
+	private double filterMatrix[][] = null;
 	
 	public Filter(PaddingStrategy paddingStrategy, ImageConversionStrategy conversionStrategy) {
 		setPaddingStrategy(paddingStrategy);
@@ -69,4 +70,13 @@ public class Filter {
 	public void setSigmaGaussien(double sigmaRecu) {
 		this.sigma = sigmaRecu;
 	}
+	public void setMatrice(double[][] filterRecu) {
+		this.filterMatrix=filterRecu;
+	}
+	
+	public double[][] getMatrice() {
+		return this.filterMatrix;
+	}
+
+	
 }

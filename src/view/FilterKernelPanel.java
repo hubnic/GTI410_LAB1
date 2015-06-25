@@ -76,12 +76,6 @@ public class FilterKernelPanel extends JPanel implements ObserverIF {
 	 * 
 	 */
 	private TransformersIndex ti;
-	//Graphic Gaussien
-	private JLabel _ParamGaussien;
-	private JComboBox _GaussienComboBox;
-	//Graphic Moyenne
-	private JLabel _ParamMoyen;
-	private  JTextField _ValueMoyen;
 
 	
 	public FilterKernelPanel(TransformersIndex ti){
@@ -114,11 +108,7 @@ public class FilterKernelPanel extends JPanel implements ObserverIF {
 		//_model.setClampValue((String)_clampComboBox.getSelectedItem());
 		
 		_filterTypeComboBox.setSelectedIndex(0);
-		_ParamMoyen    = new JLabel("Parametre Moyen");	
-		_ValueMoyen = new JTextField();
-		_ParamGaussien    = new JLabel("Parametre gaussien");
-		_GaussienComboBox = new JComboBox(KernelModel.GAUSSIEN_VALUE_SIGMA);
-		
+			
 		//BORDURE BOX
 		_handlingBorderComboBox.addActionListener(
 			new ActionListener(){
@@ -139,16 +129,11 @@ public class FilterKernelPanel extends JPanel implements ObserverIF {
 			new ActionListener(){
 				public void actionPerformed(ActionEvent ae) {
 					setFilter((String)_filterTypeComboBox.getSelectedItem());
+					
 					System.out.println(_filterTypeComboBox.getSelectedItem());
 				}	
 			});
-		//GAUSSIEN BOX
-		_GaussienComboBox.addActionListener(
-				new ActionListener(){
-					public void actionPerformed(ActionEvent ae) {
-						FilterKernelPanel.this.ti.getTheFilter().setSigmaGaussien((String) _GaussienComboBox.getSelectedItem());
-					}	
-				});
+
 		
 		_handlingBorderLabel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		_rangeClampLabel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
@@ -161,10 +146,6 @@ public class FilterKernelPanel extends JPanel implements ObserverIF {
 		_setUpPanel.add(_filterTypeLabel);
 		_setUpPanel.add(_filterTypeComboBox);
 		
-		_setDownPanel.add(_ParamMoyen);
-		_setDownPanel.add(_ValueMoyen);
-		_setDownPanel.add(_ParamGaussien);
-		_setDownPanel.add(_GaussienComboBox);
 		
 		//
 		setLayout(new BorderLayout());
@@ -186,8 +167,11 @@ public class FilterKernelPanel extends JPanel implements ObserverIF {
 		for (int i = 0; i < KernelModel.FILTER_TYPE_ARRAY.length; ++i) {
 			if (string.equals(KernelModel.FILTER_TYPE_ARRAY[i])) {
 				index = i;
+			
+				FilterKernelPanel.this.ti.getTheFilter().setTypeFiltre(index);
 			}
 		}
+		
 		switch (index) {
 			case 1: // Mean filter
 			{
@@ -203,6 +187,7 @@ public class FilterKernelPanel extends JPanel implements ObserverIF {
 										{4, 5, 6},
 										{7, 8, 9}};
 				_kernelPanel.setKernelValues(meanKernel);
+				
 			} 
 			break;
 			case 3: // 4-Neighbour Laplacian

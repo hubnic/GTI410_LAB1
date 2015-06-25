@@ -34,14 +34,11 @@ public class FilteringTransformer extends AbstractTransformer{
 	
 	private double filterMatrix[][] = null;
 	double sigmaGaussien;
-	Filter filter = new FiltreSobel(new PaddingZeroStrategy(), new ImageClampStrategy());
-	//Filter filter = new MeanFilter3x3(new PaddingZeroStrategy(), new ImageClampStrategy());
-	//Filter filter = new FiltreGaussien(new PaddingZeroStrategy(), new ImageClampStrategy());
-	//Filter filter = new FiltreMedian(new PaddingZeroStrategy(), new ImageClampStrategy());
-	//Filter filter = new FiltreLaplacien(new PaddingZeroStrategy(), new ImageClampStrategy());
+
 	//Ce filtre dispose de tout les paramètres (Padding, clamp, la gestion des filtres doit se faire soit dans FILTER ou GestionnaireFiltre
 	//On renvoie seulement l'image traitee
-	//Filter filter = new GestionnaireFiltre(new PaddingZeroStrategy(), new ImageClampStrategy());
+	
+	Filter filter = new GestionnaireFiltre(new PaddingZeroStrategy(), new ImageClampStrategy());
 
 	/**
 	 * Affiche et recupere les valeurs de la matrice graphique
@@ -57,6 +54,7 @@ public class FilteringTransformer extends AbstractTransformer{
 		filterMatrix[_coordinates.getColumn() - 1][_coordinates.getRow() - 1]= _value;
 		System.out.println((_coordinates.getColumn() - 1) +" "+(_coordinates.getRow() - 1 )+" "+ _value);
 		System.out.println("k");
+		filter.setMatrice(filterMatrix);
 		
 	}
 		
@@ -69,9 +67,9 @@ public class FilteringTransformer extends AbstractTransformer{
 		List intersectedObjects = Selector.getDocumentObjectsAtLocation(e.getPoint());
 		if (!intersectedObjects.isEmpty()) {			
 			Shape shape = (Shape)intersectedObjects.get(0);			
-			if (shape instanceof ImageX) {				
-				ImageX currentImage = (ImageX)shape;
+			if (shape instanceof ImageX) {		
 				
+				ImageX currentImage = (ImageX)shape;
 				//Debut traitement de l'image après le clic
 				ImageDouble filteredImage = filter.filterToImageDouble(currentImage);
 				ImageX filteredDisplayableImage = filter.getImageConversionStrategy().convert(filteredImage);
@@ -96,7 +94,9 @@ public class FilteringTransformer extends AbstractTransformer{
 	/* (non-Javadoc)
 	 * @see controller.AbstractTransformer#getID()
 	 */
-	public int getID() { return ID_FILTER; }
+	public int getID() {
+		System.out.println("ID DU FILTRE "+ID_FILTER);
+		return ID_FILTER; }
 
 	/**
 	 * Procedure qui permet d'ajuster le type de gestion des bordures
@@ -149,6 +149,77 @@ public class FilteringTransformer extends AbstractTransformer{
 		
 	}
 	
+	public void setTypeFiltre(int numFiltre){
+		System.out.println("JE SUIS ICI");
+		PaddingStrategy padactuel = filter.getPaddingStrategy();  
+		ImageClampStrategy imageConvertionActuel = (ImageClampStrategy) filter.getImageConversionStrategy();
+		
+		
+		switch (numFiltre) {
+		case 1: // Mean filter
+		{
+			filter = new MeanFilter3x3(padactuel, imageConvertionActuel);
+		} 
+		break;
+		case 2: // Gaussian filter
+		{
+			filter = new FiltreGaussien(padactuel, imageConvertionActuel);
+			
+		} 
+		break;
+		case 3: // 4-Neighbour Laplacian
+		{
+			filter = new FiltreLaplacien(padactuel, imageConvertionActuel);
+		} 
+		break;
+		case 4: // 8-Neighbour Laplacian
+		{
+		} 
+		break;
+		case 5: // Prewitt Horiz ====> MEDIAN****************************************************************
+		{
+			filter = new FiltreMedian(padactuel, imageConvertionActuel);
+		} 
+		break;
+		case 6: // Prewitt Vert
+		{
+
+		} 
+		break;
+		case 7: // Sobel Horiz 
+		{
+		 filter = new FiltreSobel(padactuel, imageConvertionActuel);
+		} 
+		break;
+		case 8: // Sobel Vert
+		{
+			filter = new FiltreSobel(padactuel, imageConvertionActuel);
+		} 
+		break;
+		case 9: // Roberts 45 degrees
+		{
+
+		} 
+		break;
+		case 10: // Roberts -45 degrees
+		{
+
+		} 
+		break;
+		case 0: // Custom
+		{
+			
+			filter = new FiltreCustom(padactuel, imageConvertionActuel);
+			filter.setMatrice(this.filterMatrix);
+		} 
+		break;
+		default:
+		{
+			// Do nothing
+		}
+		break;
+	}
+	}
 	
 	
 }
