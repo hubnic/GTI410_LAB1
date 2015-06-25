@@ -34,11 +34,11 @@ public class FilteringTransformer extends AbstractTransformer{
 	
 	private double filterMatrix[][] = null;
 	double sigmaGaussien;
-	
-	//Filter filter = new MeanFilter3x3(paddingStrategie, imageClampStrategie);
+	Filter filter = new FiltreSobel(new PaddingZeroStrategy(), new ImageClampStrategy());
+	//Filter filter = new MeanFilter3x3(new PaddingZeroStrategy(), new ImageClampStrategy());
 	//Filter filter = new FiltreGaussien(new PaddingZeroStrategy(), new ImageClampStrategy());
 	//Filter filter = new FiltreMedian(new PaddingZeroStrategy(), new ImageClampStrategy());
-	Filter filter = new FiltreLaplacien(new PaddingZeroStrategy(), new ImageClampStrategy());
+	//Filter filter = new FiltreLaplacien(new PaddingZeroStrategy(), new ImageClampStrategy());
 	//Ce filtre dispose de tout les paramètres (Padding, clamp, la gestion des filtres doit se faire soit dans FILTER ou GestionnaireFiltre
 	//On renvoie seulement l'image traitee
 	//Filter filter = new GestionnaireFiltre(new PaddingZeroStrategy(), new ImageClampStrategy());

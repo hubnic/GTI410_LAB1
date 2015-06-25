@@ -83,9 +83,8 @@ public class ImageClampAbsNormalizeTo255 extends ImageClampStrategy {
 
 	double normalisation(double cone) {
 		double calcul;
-		cone= ((cone+Math.abs(minMax[0])*minMax[1]));
-		//calcul = Math.abs(cone);
-		return cone;
+		calcul= (Math.abs(cone)+minMax[0])*(255/minMax[1]);
+		return calcul;
 	}
 
 }
