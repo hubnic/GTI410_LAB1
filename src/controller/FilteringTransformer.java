@@ -33,11 +33,7 @@ import model.Shape;
 public class FilteringTransformer extends AbstractTransformer{
 	
 	private double filterMatrix[][] = null;
-
-	//Ce filtre dispose de tout les paramètres (Padding, clamp, la gestion des filtres doit se faire soit dans FILTER ou GestionnaireFiltre
-	//On renvoie seulement l'image traitee
 	
-	//Filter filter = new GestionnaireFiltre(new PaddingZeroStrategy(), new ImageClampStrategy());
 	Filter filter = new FiltreCustom(new PaddingZeroStrategy(), new ImageClampStrategy());
 
 	/**
@@ -111,8 +107,8 @@ public class FilteringTransformer extends AbstractTransformer{
 	public void setBorder(String typeBorder) {
 		System.out.println(typeBorder);
 		if(typeBorder.equals("Mirror")){
-			filter.setPaddingStrategy(new PaddingMiror());
-			
+			//filter.setPaddingStrategy(new PaddingMiror());
+			filter.setPaddingStrategy(new PaddingMirror2());
 		}
 		else if(!typeBorder.equals("Mirror")){
 			filter.setPaddingStrategy(new PaddingZeroStrategy());
