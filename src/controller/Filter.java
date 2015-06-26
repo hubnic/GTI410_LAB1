@@ -80,19 +80,31 @@ public class Filter {
 		filterMatrix[2][0]=filterRecu[2][0];
 		filterMatrix[2][1]=filterRecu[2][1];
 		filterMatrix[2][2]=filterRecu[2][2];
+		System.out.println("Je suis dans le setter de la Matrice FIlter");
+		System.out.println(filterRecu[0][0]);
+		System.out.println(filterRecu[0][1]);
+		System.out.println(filterRecu[0][2]);
+		System.out.println(filterRecu[1][0]);
+		System.out.println(filterRecu[1][1]);
+		System.out.println(filterRecu[1][2]);
+		System.out.println(filterRecu[2][0]);
+		System.out.println(filterRecu[2][1]);
+		System.out.println(filterRecu[2][2]);
 	}
-	
+	public void setMatriceIndividuelle(int x, int y, float value) {
+		filterMatrix[x][y] = value;
+	}
 	public double[][] getMatrice() {
-		System.out.println("Je suis dans la Matrice FIlter");
-		System.out.println(filterMatrix[0][0]);
-		System.out.println(filterMatrix[0][1]);
-		System.out.println(filterMatrix[0][2]);
-		System.out.println(filterMatrix[1][0]);
-		System.out.println(filterMatrix[1][1]);
-		System.out.println(filterMatrix[1][2]);
-		System.out.println(filterMatrix[2][0]);
-		System.out.println(filterMatrix[2][1]);
-		System.out.println(filterMatrix[2][2]);
+//		System.out.println("Je suis dans le getter la Matrice Filter");
+//		System.out.println(filterMatrix[0][0]);
+//		System.out.println(filterMatrix[0][1]);
+//		System.out.println(filterMatrix[0][2]);
+//		System.out.println(filterMatrix[1][0]);
+//		System.out.println(filterMatrix[1][1]);
+//		System.out.println(filterMatrix[1][2]);
+//		System.out.println(filterMatrix[2][0]);
+//		System.out.println(filterMatrix[2][1]);
+//		System.out.println(filterMatrix[2][2]);
 		return this.filterMatrix;
 	}
 

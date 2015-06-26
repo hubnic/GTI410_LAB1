@@ -12,6 +12,7 @@ public class FiltreCustom extends Filter {
 		super(paddingStrategy, conversionStrategy);
 
 		filterMatrix= super.getMatrice();
+
 	
 	}
 

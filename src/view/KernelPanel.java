@@ -108,6 +108,7 @@ public class KernelPanel extends JPanel implements ObservableIF {
 		for(int i = 0; i < _size; i++){
 			for (int j = 0; j < _size; j++){
 				_kernelCells[i][j].setValue(values[i][j]);
+
 			}
 		}
 		updateTransformerKernel();
