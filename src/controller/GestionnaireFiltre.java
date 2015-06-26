@@ -6,7 +6,7 @@ public class GestionnaireFiltre extends Filter{
 	
 	//Filter filtreMoyen = new FiltreMoyen(new PaddingZeroStrategy(), new ImageClampStrategy());
 	//Filter filtreGaussien = new FiltreGaussien(new PaddingZeroStrategy(), new ImageClampStrategy());
-	//Filter filtreSobel = new FiltreSobel(new PaddingZeroStrategy(), new ImageClampStrategy());
+	//Filter filtreSobel = new FiltreSobelV(new PaddingZeroStrategy(), new ImageClampStrategy());
 	//Filter filtreLaplacien = new FiltreLaplacien(new PaddingZeroStrategy(), new ImageClampStrategy());
 	
 	public GestionnaireFiltre(PaddingStrategy paddingStrategy,
@@ -51,12 +51,12 @@ public class GestionnaireFiltre extends Filter{
 		break;
 		case 7: // Sobel Horiz 
 		{
-			Filter filter = new FiltreSobel(this.getPaddingStrategy(), this.getImageConversionStrategy());
+			Filter filter = new FiltreSobelH(this.getPaddingStrategy(), this.getImageConversionStrategy());
 		} 
 		break;
 		case 8: // Sobel Vert
 		{
-			Filter filter = new FiltreSobel(this.getPaddingStrategy(), this.getImageConversionStrategy());
+			Filter filter = new FiltreSobelV(this.getPaddingStrategy(), this.getImageConversionStrategy());
 		} 
 		break;
 		case 9: // Roberts 45 degrees

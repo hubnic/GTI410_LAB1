@@ -4,12 +4,7 @@ import model.ImageDouble;
 import model.ImageX;
 import model.PixelDouble;
 
-
-import model.ImageDouble;
-import model.ImageX;
-import model.PixelDouble;
-
-public class FiltreSobel extends Filter {
+public class FiltreSobelH extends Filter {
 	private double filterMatrixH[][] = null;
 	private double filterMatrixV[][] = null;
 
@@ -18,11 +13,10 @@ public class FiltreSobel extends Filter {
 	 * @param paddingStrategy PaddingStrategy used
 	 * @param conversionStrategy ImageConversionStrategy used
 	 */
-	public FiltreSobel(PaddingStrategy paddingStrategy,
-						  ImageConversionStrategy conversionStrategy) {
+	public FiltreSobelH(PaddingStrategy paddingStrategy,
+						ImageConversionStrategy conversionStrategy) {
 		super(paddingStrategy, conversionStrategy);
 		filterMatrixH = new double[3][3];
-		filterMatrixV = new double[3][3];
 
 		filterMatrixH[0][0] = -1;
 		filterMatrixH[1][0] = 0;
@@ -33,16 +27,6 @@ public class FiltreSobel extends Filter {
 		filterMatrixH[0][2] = -1;
 		filterMatrixH[1][2] = 0;
 		filterMatrixH[2][2] = 1;
-
-		filterMatrixV[0][0] = -1;
-		filterMatrixV[1][0] = -2;
-		filterMatrixV[2][0] = -1;
-		filterMatrixV[0][1] = 0;
-		filterMatrixV[1][1] = 0;
-		filterMatrixV[2][1] = 0;
-		filterMatrixV[0][2] = 1;
-		filterMatrixV[1][2] = 2;
-		filterMatrixV[2][2] = 1;
 	}
 
 	/**
@@ -97,14 +81,10 @@ public class FiltreSobel extends Filter {
 						resultH += filterMatrixH[i][j] * getPaddingStrategy().pixelAt(image,
 								x + (i - 1),
 								y + (j - 1)).getRed();
-						resultV += filterMatrixV[i][j] * getPaddingStrategy().pixelAt(image,
-								x + (i - 1),
-								y + (j - 1)).getRed();
 					}
 				}
-				newPixel.setRed(Math.abs(resultH)+Math.abs(resultV));
+				newPixel.setRed(Math.abs(resultH));
 				resultH = 0;
-				resultV = 0;
 				//*******************************
 				// Green
 				for (int i = 0; i <= 2; i++) {
@@ -112,14 +92,10 @@ public class FiltreSobel extends Filter {
 						resultH += filterMatrixH[i][j] * getPaddingStrategy().pixelAt(image,
 								x + (i - 1),
 								y + (j - 1)).getGreen();
-						resultV += filterMatrixV[i][j] * getPaddingStrategy().pixelAt(image,
-								x + (i - 1),
-								y + (j - 1)).getGreen();
 					}
 				}
-				newPixel.setGreen(Math.abs(resultH) + Math.abs(resultV));
+				newPixel.setGreen(Math.abs(resultH));
 				resultH = 0;
-				resultV = 0;
 				//*******************************
 				// Blue
 				for (int i = 0; i <= 2; i++) {
@@ -127,14 +103,10 @@ public class FiltreSobel extends Filter {
 						resultH += filterMatrixH[i][j] * getPaddingStrategy().pixelAt(image,
 								x + (i - 1),
 								y + (j - 1)).getBlue();
-						resultV += filterMatrixV[i][j] * getPaddingStrategy().pixelAt(image,
-								x + (i - 1),
-								y + (j - 1)).getBlue();
 					}
 				}
-				newPixel.setBlue(Math.abs(resultH) + Math.abs(resultV));
+				newPixel.setBlue(Math.abs(resultH));
 				resultH = 0;
-				resultV = 0;
 				//*******************************
 				// Alpha - Untouched in this filter
 				newPixel.setAlpha(getPaddingStrategy().pixelAt(image, x,y).getAlpha());

@@ -33,7 +33,7 @@ import model.Shape;
 public class FilteringTransformer extends AbstractTransformer{
 	
 	private double filterMatrix[][] = null;
-	double sigmaGaussien;
+
 	//Ce filtre dispose de tout les paramètres (Padding, clamp, la gestion des filtres doit se faire soit dans FILTER ou GestionnaireFiltre
 	//On renvoie seulement l'image traitee
 	
@@ -58,14 +58,6 @@ public class FilteringTransformer extends AbstractTransformer{
 		//System.out.println("k");
 		//filter.setMatrice(filterMatrix);
 //		System.out.println(filterMatrix[0][0]);
-//		System.out.println(filterMatrix[0][1]);
-//		System.out.println(filterMatrix[0][2]);
-//		System.out.println(filterMatrix[1][0]);
-//		System.out.println(filterMatrix[1][1]);
-//		System.out.println(filterMatrix[1][2]);
-//		System.out.println(filterMatrix[2][0]);
-//		System.out.println(filterMatrix[2][1]);
-//		System.out.println(filterMatrix[2][2]);
 	}
 		
 	/**
@@ -198,12 +190,12 @@ public class FilteringTransformer extends AbstractTransformer{
 		break;
 		case 7: // Sobel Horiz 
 		{
-		 filter = new FiltreSobel(padactuel, imageConvertionActuel);
+		 filter = new FiltreSobelV(padactuel, imageConvertionActuel);
 		} 
 		break;
 		case 8: // Sobel Vert
 		{
-			filter = new FiltreSobel(padactuel, imageConvertionActuel);
+			filter = new FiltreSobelV(padactuel, imageConvertionActuel);
 		} 
 		break;
 		case 9: // Roberts 45 degrees
