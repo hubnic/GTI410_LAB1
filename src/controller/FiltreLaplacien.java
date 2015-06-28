@@ -5,7 +5,19 @@ import java.util.Arrays;
 import model.ImageDouble;
 import model.ImageX;
 import model.PixelDouble;
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_3
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert HUBN30099004
+ */
 
+/**
+ * Classe permettant d'appliquer le Filtre Laplacien
+ *
+ */
 public class FiltreLaplacien extends Filter {
 	private double filterMatrix[][] = null;
 

@@ -13,7 +13,14 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 package controller;
-
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_3
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert HUBN30099004
+ */
 import java.awt.event.MouseEvent;
 import java.util.List;
 
@@ -29,6 +36,12 @@ import model.Shape;
  * <p>Company: (ÉTS) - École de Technologie Supérieure</p>
  * @author unascribed
  * @version $Revision: 1.6 $
+ */
+
+/**
+ * Classe qui permet de délancher le filtre appropriee avec les parametres
+ * appropries
+ *  *
  */
 public class FilteringTransformer extends AbstractTransformer{
 	
@@ -140,15 +153,8 @@ public class FilteringTransformer extends AbstractTransformer{
 		}
 	}
 	
-	public void setSigmaGaussien (String sigmaRecu) {
-		System.out.println("Set valeur Sigma" + sigmaRecu);
-		//Affect Sigma à super Filter
-		filter.setSigmaGaussien(new Double(sigmaRecu));
-		
-	}
 	
 	public void setTypeFiltre(int numFiltre){
-		System.out.println("JE SUIS ICI");
 		PaddingStrategy padactuel = filter.getPaddingStrategy();  
 		ImageClampStrategy imageConvertionActuel = (ImageClampStrategy) filter.getImageConversionStrategy();
 		

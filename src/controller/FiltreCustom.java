@@ -3,7 +3,20 @@ package controller;
 import model.ImageDouble;
 import model.ImageX;
 import model.PixelDouble;
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_3
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert HUBN30099004
+ */
 
+/**
+ * Classe permettant dappliquer le filtre Custom selon les valeurs
+ * saisies dans la matrice graphique
+ *
+ */
 public class FiltreCustom extends Filter {
 
 	double [][] filterMatrix = new double[3][3];

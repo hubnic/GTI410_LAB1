@@ -4,7 +4,22 @@ import model.ImageDouble;
 import model.ImageX;
 import model.Pixel;
 import model.PixelDouble;
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_3
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert HUBN30099004
+ */
 
+/**
+ *Classe qui permet de convertir notre image double en imageX
+ *Elle permet aussi d'ajuster les contrastes de l image en appliquant un normalisation
+ *sur l ensemble des pixels par l utilisation de la valeur absolue et le calcul du min et max des pixels
+ *Calcul : (Math.abs(cone)+minMax[0])*(255/minMax[1]);
+ *
+ */
 public class ImageClampAbsNormalizeTo255 extends ImageClampStrategy {
 
 	double[] minMax;

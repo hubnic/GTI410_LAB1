@@ -21,6 +21,14 @@ import java.awt.event.*;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.List;
 import java.util.Stack;
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_2
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert HUBN30099004
+ */
 
 /**
  * <p>Title: ImageLineFiller</p>
@@ -69,8 +77,7 @@ public class RemplissageFiller extends AbstractTransformer {
 				Point ptTransformed = new Point();
 				try {
 					shape.inverseTransformPoint(pt, ptTransformed);
-					System.out.println(" pt.x "+pt.x+" "+" pt.y "+pt.y);
-					System.out.println(" ptTransformed.x "+ptTransformed.x+" "+" ptTransformed.y "+ptTransformed.y);
+				
 	
 				} catch (NoninvertibleTransformException e1) {
 					e1.printStackTrace();
@@ -340,11 +347,9 @@ public class RemplissageFiller extends AbstractTransformer {
 		
 		if (0 <= pointX && pointX < currentImageWidth &&
 			    0 <= pointY && pointY < currentImageHeight) {
-			//System.out.println("Point Valide"+ " X "+pointX +" Y "+pointY);
 			return true;
 		}
 		else{
-			//System.out.println("Point Refuse" + " X "+pointX +" Y "+pointY);
 			return false;
 		}
 	}
@@ -378,17 +383,14 @@ public class RemplissageFiller extends AbstractTransformer {
 		double[] HSVBorderColor = convertisseur.RGBversHSV(borderColor.getRed(), borderColor.getGreen(), borderColor.getBlue());
 		
 		double[] HSVPixelRecu = convertisseur.RGBversHSV(pixel.getRed(), pixel.getGreen(), pixel.getBlue());
-		System.out.println("CalculHbas"+ (HSVBorderColor[0] - getHueThreshold()));
-		System.out.println("CalculHHaut"+(HSVBorderColor[0] + getHueThreshold()));
+
 		double HBas = calculValeurH(HSVBorderColor[0] - getHueThreshold());
 		double HHaut = calculValeurH(HSVBorderColor[0] + getHueThreshold());
 		double SBas = calculValeurS((HSVBorderColor[1]*255) - getSaturationThreshold());
 		double SHaut = calculValeurS((HSVBorderColor[1]*255) + getSaturationThreshold());
 		double VBas = calculValeurV((HSVBorderColor[2]*255) - getValueThreshold());
 		double VHaut = calculValeurV((HSVBorderColor[2]*255) + getValueThreshold());
-		System.out.println("Hbas "+HBas+" HPixel "+HSVPixelRecu[0]+" HHaut "+HHaut);
-		System.out.println("Sbas "+SBas+" SPixel "+HSVPixelRecu[1]*255+" SHaut "+SHaut);
-		System.out.println("Vbas "+VBas+" VPixel "+HSVPixelRecu[2]*255+" VHaut "+VHaut);
+	
 		if(		HBas <= HSVPixelRecu[0] &&  HSVPixelRecu[0] <= HHaut &&
 				SBas <= (HSVPixelRecu[1]*255) &&  (HSVPixelRecu[1]*255) <= SHaut &&	
 				VBas <= (HSVPixelRecu[2]*255) &&  (HSVPixelRecu[2]*255) <= VHaut ){

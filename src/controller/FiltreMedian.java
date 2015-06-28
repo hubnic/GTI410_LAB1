@@ -17,7 +17,14 @@ package controller;
 import model.*;
 
 import java.util.Arrays;
-
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_3
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert HUBN30099004
+ */
 /**
  * <p>Title: MeanFilter3x3</p>
  * <p>Description: A mean filter implementation.</p>
@@ -25,6 +32,12 @@ import java.util.Arrays;
  * <p>Company: ETS - École de Technologie Supérieure</p>
  * @author unascribed
  * @version $Revision: 1.11 $
+ */
+
+/**
+ * Classe permettant d'appliquer le filtre non linéaire Médian
+ * @author i7
+ *
  */
 public class FiltreMedian extends Filter {
 	private double filterMatrix[][] = null;

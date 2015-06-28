@@ -67,9 +67,6 @@ public class Filter {
 		return conversionStrategy;
 	}
 	
-	public void setSigmaGaussien(double sigmaRecu) {
-		this.sigma = sigmaRecu;
-	}
 	public void setMatrice(double[][] filterRecu) {
 		filterMatrix[0][0]=filterRecu[0][0];
 		filterMatrix[0][1]=filterRecu[0][1];

@@ -6,9 +6,12 @@ import model.Pixel;
 import model.PixelDouble;
 
 /**
- * Implementation de la gestion des bordures en mode Reflexion
- * @author i7
- *
+ * COURS_GTI_410 : 
+ * LABORATOIRE_3
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert HUBN30099004
  */
 public class PaddingMiror extends PaddingStrategy {
 

@@ -15,7 +15,14 @@
 package controller;
 
 import model.*;
-
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_3
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert HUBN30099004
+ */
 /**
  * <p>Title: PaddingStrategy</p>
  * <p>Description: Abstract strategy class to handle Pixel range interpretation & validation.</p>

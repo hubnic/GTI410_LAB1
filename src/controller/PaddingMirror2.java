@@ -4,7 +4,20 @@ import model.ImageDouble;
 import model.ImageX;
 import model.Pixel;
 import model.PixelDouble;
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_3
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert HUBN30099004
+ */
 
+/**
+ * Classe permettant d'implémenter la stratégie mirror pour la gestion
+ * des bordures
+ *
+ */
 public class PaddingMirror2 extends PaddingStrategy {
 
 	@Override

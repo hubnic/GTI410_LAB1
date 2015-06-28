@@ -4,7 +4,14 @@ import model.ImageDouble;
 import model.ImageX;
 import model.Pixel;
 import model.PixelDouble;
-
+/**
+ * COURS_GTI_410 : 
+ * LABORATOIRE_3
+ * 
+ * EQUIPE : 
+ * 			Idriss Aissou AISI01088901
+ * 			Nicolas Hubert HUBN30099004
+ */
 public class ImageClampNormalize0To255 extends ImageClampStrategy{
 	
 	 public ImageX convert(ImageDouble image) {
