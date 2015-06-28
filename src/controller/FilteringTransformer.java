@@ -62,15 +62,13 @@ public class FilteringTransformer extends AbstractTransformer{
                                    + _value);
 		filterMatrix[_coordinates.getColumn() - 1][_coordinates.getRow() - 1] = _value;
 		filter.setMatriceIndividuelle(_coordinates.getColumn() - 1, _coordinates.getRow() - 1, _value);
-		//filter.setMatrice(this.filterMatrix);
-		//System.out.println((_coordinates.getColumn() - 1) +" "+(_coordinates.getRow() - 1 )+" "+ _value);
-		//System.out.println("k");
-		//filter.setMatrice(filterMatrix);
-//		System.out.println(filterMatrix[0][0]);
+
 	}
 		
 	/**
 	 * Evenement après un click de la souris
+	 * Cela lance le traitement de l image avec les
+	 * parametres sélectionnes
 	 * @param e
 	 * @return
 	 */
@@ -106,7 +104,6 @@ public class FilteringTransformer extends AbstractTransformer{
 	 * @see controller.AbstractTransformer#getID()
 	 */
 	public int getID() {
-		System.out.println("ID DU FILTRE "+ID_FILTER);
 		return ID_FILTER; }
 
 	/**
@@ -120,7 +117,6 @@ public class FilteringTransformer extends AbstractTransformer{
 	public void setBorder(String typeBorder) {
 		System.out.println(typeBorder);
 		if(typeBorder.equals("Mirror")){
-			//filter.setPaddingStrategy(new PaddingMiror());
 			filter.setPaddingStrategy(new PaddingMirror2());
 		}
 		else if(!typeBorder.equals("Mirror")){
@@ -154,6 +150,11 @@ public class FilteringTransformer extends AbstractTransformer{
 	}
 	
 	
+	/**
+	 * Methode qui permet de créer le filtre approprié
+	 * selon la sélection faite à l'écran
+	 * @param numFiltre
+	 */
 	public void setTypeFiltre(int numFiltre){
 		PaddingStrategy padactuel = filter.getPaddingStrategy();  
 		ImageClampStrategy imageConvertionActuel = (ImageClampStrategy) filter.getImageConversionStrategy();
@@ -180,7 +181,7 @@ public class FilteringTransformer extends AbstractTransformer{
 		{
 		} 
 		break;
-		case 5: // Prewitt Horiz ====> MEDIAN****************************************************************
+		case 5: // ******Prewitt Horiz ====> MEDIAN****************************************************************
 		{
 			filter = new FiltreMedian(padactuel, imageConvertionActuel);
 		} 
