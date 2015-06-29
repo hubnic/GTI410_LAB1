@@ -147,6 +147,16 @@ public class ImageX extends Shape implements ShapeObservable {
 					  null);
 	}
 	
+	public void drawScale(Graphics gfx, int x,int y) {
+		gfx.drawImage(image, 
+					  (int)(getCenter().getX()-width/2),
+					  (int)(getCenter().getY()-height/2), 
+					  width*x, 
+					  height*y, 
+					  null);
+	}
+	
+	
 	public Point getPosition() {
 		return new Point((int)(getCenter().getX()-width/2),(int)(getCenter().getY()-height/2)); 		
 	}
