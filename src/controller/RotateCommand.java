@@ -55,8 +55,12 @@ public class RotateCommand extends AnchoredTransformationCommand {
 			shape = (Shape)iter.next();
 			mt.addMememto(shape);
 			AffineTransform t = shape.getAffineTransform();
-			t.rotate(thetaDegrees);
+			//Conversion de l angle en radian, et récupération de l'anchor Point cause par la selection graphique depuis l'element Objet
+			t.rotate(Math.toRadians(thetaDegrees),
+					getAnchorPoint(objects).x,
+					getAnchorPoint(objects).y);
 			shape.setAffineTransform(t);
+		
 		}
 
 		// voluntarily undefined

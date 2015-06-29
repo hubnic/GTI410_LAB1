@@ -52,7 +52,12 @@ public class ShearYCommand extends AnchoredTransformationCommand {
 			shape = (Shape)iter.next();
 			mt.addMememto(shape);
 			AffineTransform t = shape.getAffineTransform();
+			//SHEAR Y
 			t.shear(0, angleDegrees);
+			//getAnchorPoint(objects) permet de récupérer le point de référence selon l'image d'origine
+			//permet aussi de calculer le vecteur de translation
+			t.translate(this.getAnchorPoint(objects).x*-1,
+					this.getAnchorPoint(objects).y*-1);
 			shape.setAffineTransform(t);
 		}
 		

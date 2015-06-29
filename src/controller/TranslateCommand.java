@@ -48,7 +48,7 @@ public class TranslateCommand extends Command {
 			shape = (Shape)iter.next();
 			mt.addMememto(shape);
 			ImageX currentImage = (ImageX)shape;
-			currentimage.
+			//currentimage.
 			AffineTransform t = shape.getAffineTransform();
 			t.translate(x,y);
 			shape.setAffineTransform(t);
