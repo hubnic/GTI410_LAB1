@@ -18,7 +18,9 @@ import java.awt.geom.AffineTransform;
 import java.util.Iterator;
 import java.util.List;
 
+import model.ImageX;
 import model.Shape;
+import view.Application;
 
 /**
  * <p>Title: TranslateCommand</p>
@@ -45,9 +47,12 @@ public class TranslateCommand extends Command {
 		while(iter.hasNext()){
 			shape = (Shape)iter.next();
 			mt.addMememto(shape);
+			ImageX currentImage = (ImageX)shape;
+			currentimage.
 			AffineTransform t = shape.getAffineTransform();
 			t.translate(x,y);
 			shape.setAffineTransform(t);
+
 		}
 	}
 
