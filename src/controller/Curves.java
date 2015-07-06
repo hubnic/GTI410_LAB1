@@ -19,13 +19,14 @@ import java.util.List;
 
 import view.Application;
 import view.CurvesPanel;
-
 import model.BezierCurveType;
+import model.BsplineCurveType;
 import model.ControlPoint;
 import model.Curve;
 import model.CurvesModel;
 import model.DocObserver;
 import model.Document;
+import model.HermiteCurveType;
 import model.PolylineCurveType;
 import model.Shape;
 
@@ -105,7 +106,12 @@ public class Curves extends AbstractTransformer implements DocObserver {
 			curve.setCurveType(new BezierCurveType(CurvesModel.BEZIER));
 		} else if (string == CurvesModel.LINEAR) {
 			curve.setCurveType(new PolylineCurveType(CurvesModel.LINEAR));
-		} else {
+		} else if (string == CurvesModel.HERMITE) {
+			curve.setCurveType(new HermiteCurveType(CurvesModel.HERMITE));
+		} else if (string == CurvesModel.BSPLINE) {
+			curve.setCurveType(new BsplineCurveType(CurvesModel.BSPLINE));
+		}
+		else {
 			System.out.println("Curve type [" + string + "] is unknown.");
 		}
 	}
