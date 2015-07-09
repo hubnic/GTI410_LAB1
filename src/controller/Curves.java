@@ -125,6 +125,56 @@ public class Curves extends AbstractTransformer implements DocObserver {
 				if (curve.getShapes().contains(s)){
 					int controlPointIndex = curve.getShapes().indexOf(s);
 					System.out.println("Try to apply G1 continuity on control point [" + controlPointIndex + "]");
+					
+					//Recuperation des points pour le calcul
+					
+					ControlPoint pointReference = (ControlPoint) s;
+					ControlPoint pointAvant = (ControlPoint) curve.getShapes().get(controlPointIndex-1);
+					ControlPoint pointApres = (ControlPoint) curve.getShapes().get(controlPointIndex+1) ; 
+					
+					//Calcul du delta Avant
+					double deltaAvant = ((pointReference.getCenter().getY()-pointAvant.getCenter().getY())
+							/(pointReference.getCenter().getX()-pointAvant.getCenter().getX()));
+					
+					//Calcul du delta Apres
+					double deltaApres = ((pointApres.getCenter().getY()-pointReference.getCenter().getY())
+							/(pointApres.getCenter().getX()-pointReference.getCenter().getX()));
+					
+					//Calcul d1 et d2
+					//D1
+					double x = (pointReference.getCenter().getX()-pointAvant.getCenter().getX());
+					double y = (pointReference.getCenter().getY()-pointAvant.getCenter().getY());
+					double d1 = Math.sqrt(x*x+y*y);
+					//D2
+					double x2 = (pointApres.getCenter().getX()-pointReference.getCenter().getX());
+					double y2 = (pointApres.getCenter().getY()-pointReference.getCenter().getY());
+					double d2 = Math.sqrt(x2*x2+y2*y2);
+					
+					//Calcul du nouveau Point
+					ControlPoint nouveauPointApres = new  ControlPoint(
+							((-(pointAvant.getCenter().getX()-pointReference.getCenter().getX())/d1)*d2)+(pointReference.getCenter().getX()),
+							((-(pointAvant.getCenter().getY()-pointReference.getCenter().getY())/d1)*d2)+pointReference.getCenter().getY());
+					
+					pointApres.setCenter(nouveauPointApres.getCenter().getX(), nouveauPointApres.getCenter().getY());
+					pointApres.notifyObservers();
+					System.out.println(" Delta Avant "+deltaAvant);
+					System.out.println(" Delta Apres " + deltaApres);
+					System.out.println("*********************************************");
+					System.out.println(" D1 "+d1);
+					System.out.println(" D2 " + d2);
+					System.out.println("*********************************************");
+					System.out.println(" x Point Avant "+pointAvant.getCenter().getX());
+					System.out.println(" y Point AVant "+pointAvant.getCenter().getY());
+					System.out.println("*********************************************");
+					System.out.println(" x Point REF "+pointReference.getCenter().getX());
+					System.out.println(" y Point REF "+pointReference.getCenter().getY());
+					System.out.println("*********************************************");
+					System.out.println(" x Point apres "+pointApres.getCenter().getX());
+					System.out.println(" y Point apres "+pointApres.getCenter().getY());
+					System.out.println("*********************************************");
+					System.out.println(" NOUVEAU x Point apres "+nouveauPointApres.getCenter().getX());
+					System.out.println(" NOUVEAU y Point apres "+nouveauPointApres.getCenter().getY());
+					
 				}
 			}
 			
@@ -140,6 +190,21 @@ public class Curves extends AbstractTransformer implements DocObserver {
 				if (curve.getShapes().contains(s)){
 					int controlPointIndex = curve.getShapes().indexOf(s);
 					System.out.println("Try to apply C1 continuity on control point [" + controlPointIndex + "]");
+					
+					ControlPoint pointReference = (ControlPoint) s;
+					ControlPoint pointAvant = (ControlPoint) curve.getShapes().get(controlPointIndex-1);
+					ControlPoint pointApres = (ControlPoint) curve.getShapes().get(controlPointIndex+1) ; 
+					
+					//Calcul du delta Avant
+					double deltaAvantX = (pointAvant.getCenter().getX()-pointReference.getCenter().getX());
+					double deltaAvantY = (pointAvant.getCenter().getY()-pointReference.getCenter().getY());
+					
+					System.out.println(" Delta X "+deltaAvantX);
+					System.out.println(" Delta Y " + deltaAvantY);
+					
+					pointApres.setCenter(pointReference.getCenter().getX()-deltaAvantX,
+							pointReference.getCenter().getY()-deltaAvantY);
+					pointApres.notifyObservers();
 				}
 			}
 			
