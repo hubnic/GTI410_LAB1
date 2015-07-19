@@ -131,15 +131,7 @@ public class Curves extends AbstractTransformer implements DocObserver {
 					ControlPoint pointReference = (ControlPoint) s;
 					ControlPoint pointAvant = (ControlPoint) curve.getShapes().get(controlPointIndex-1);
 					ControlPoint pointApres = (ControlPoint) curve.getShapes().get(controlPointIndex+1) ; 
-					
-					//Calcul du delta Avant
-					double deltaAvant = ((pointReference.getCenter().getY()-pointAvant.getCenter().getY())
-							/(pointReference.getCenter().getX()-pointAvant.getCenter().getX()));
-					
-					//Calcul du delta Apres
-					double deltaApres = ((pointApres.getCenter().getY()-pointReference.getCenter().getY())
-							/(pointApres.getCenter().getX()-pointReference.getCenter().getX()));
-					
+									
 					//Calcul d1 et d2
 					//D1
 					double x = (pointReference.getCenter().getX()-pointAvant.getCenter().getX());
@@ -157,8 +149,7 @@ public class Curves extends AbstractTransformer implements DocObserver {
 					
 					pointApres.setCenter(nouveauPointApres.getCenter().getX(), nouveauPointApres.getCenter().getY());
 					pointApres.notifyObservers();
-					System.out.println(" Delta Avant "+deltaAvant);
-					System.out.println(" Delta Apres " + deltaApres);
+				
 					System.out.println("*********************************************");
 					System.out.println(" D1 "+d1);
 					System.out.println(" D2 " + d2);
