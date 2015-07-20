@@ -150,21 +150,6 @@ public class Curves extends AbstractTransformer implements DocObserver {
 					pointApres.setCenter(nouveauPointApres.getCenter().getX(), nouveauPointApres.getCenter().getY());
 					pointApres.notifyObservers();
 				
-					System.out.println("*********************************************");
-					System.out.println(" D1 "+d1);
-					System.out.println(" D2 " + d2);
-					System.out.println("*********************************************");
-					System.out.println(" x Point Avant "+pointAvant.getCenter().getX());
-					System.out.println(" y Point AVant "+pointAvant.getCenter().getY());
-					System.out.println("*********************************************");
-					System.out.println(" x Point REF "+pointReference.getCenter().getX());
-					System.out.println(" y Point REF "+pointReference.getCenter().getY());
-					System.out.println("*********************************************");
-					System.out.println(" x Point apres "+pointApres.getCenter().getX());
-					System.out.println(" y Point apres "+pointApres.getCenter().getY());
-					System.out.println("*********************************************");
-					System.out.println(" NOUVEAU x Point apres "+nouveauPointApres.getCenter().getX());
-					System.out.println(" NOUVEAU y Point apres "+nouveauPointApres.getCenter().getY());
 					
 				}
 			}
@@ -190,8 +175,6 @@ public class Curves extends AbstractTransformer implements DocObserver {
 					double deltaAvantX = (pointAvant.getCenter().getX()-pointReference.getCenter().getX());
 					double deltaAvantY = (pointAvant.getCenter().getY()-pointReference.getCenter().getY());
 					
-					System.out.println(" Delta X "+deltaAvantX);
-					System.out.println(" Delta Y " + deltaAvantY);
 					
 					pointApres.setCenter(pointReference.getCenter().getX()-deltaAvantX,
 							pointReference.getCenter().getY()-deltaAvantY);

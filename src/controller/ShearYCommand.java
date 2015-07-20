@@ -52,6 +52,8 @@ public class ShearYCommand extends AnchoredTransformationCommand {
 			shape = (Shape)iter.next();
 			mt.addMememto(shape);
 			AffineTransform t = shape.getAffineTransform();
+			//On applique une translation au besoin selon le point de référence.
+			t.translate(this.getAnchorPoint(objects).x, this.getAnchorPoint(objects).y);
 			//SHEAR Y et conversion de l'ange en radian
 			t.shear(0, Math.toRadians(angleDegrees));
 			//getAnchorPoint(objects) permet de récupérer le point de référence selon l'image d'origine

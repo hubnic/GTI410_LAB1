@@ -70,10 +70,7 @@ public class BsplineCurveType extends CurveType {
 	public Point evalCurveAt(List controlPoints, double t) {
 		List tVector = Matrix.buildRowVector4(t*t*t, t*t, t, 1);
 
-		System.out.println("Point -3 "+((ControlPoint)controlPoints.get(0)).getCenter().x+" "+((ControlPoint)controlPoints.get(0)).getCenter().y);
-		System.out.println("Point -2 "+((ControlPoint)controlPoints.get(1)).getCenter().x+" "+((ControlPoint)controlPoints.get(1)).getCenter().y);
-		System.out.println("Point -1 "+((ControlPoint)controlPoints.get(2)).getCenter().x+" "+((ControlPoint)controlPoints.get(2)).getCenter().y);
-		System.out.println("Point  i "+((ControlPoint)controlPoints.get(3)).getCenter().x+" "+((ControlPoint)controlPoints.get(3)).getCenter().y);
+
 
 		List gVector = Matrix.buildColumnVector4(
 				((ControlPoint)controlPoints.get(0)).getCenter(),
